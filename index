@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     * { font-family: 'Fredoka', sans-serif; }
@@ -755,6 +756,7 @@ function renderHostDashboard() {
   const hist = document.getElementById('host-history');
   hist.innerHTML = gameState.matchHistory.length === 0 ? '<p class="text-slate-500 italic">No matches yet</p>' :
     gameState.matchHistory.slice(-10).reverse().map(m => `<div class="py-1 border-b border-slate-700">${m.playerX} vs ${m.playerO} → <strong>${m.winner}</strong> <span class="text-slate-500 text-xs">${m.time}</span></div>`).join('');
+  const socket = io();
 }
 
 // ===== TOAST =====
