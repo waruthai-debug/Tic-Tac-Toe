@@ -431,7 +431,7 @@ function showScreen(id) {
 }
 
 // ===== MATCHMAKING =====
-const channel = new BroadcastChannel('quiz-tictactoe');
+const socket = io();
 let waitingForMatch = false;
 
 function getPlayerName() {
@@ -756,7 +756,6 @@ function renderHostDashboard() {
   const hist = document.getElementById('host-history');
   hist.innerHTML = gameState.matchHistory.length === 0 ? '<p class="text-slate-500 italic">No matches yet</p>' :
     gameState.matchHistory.slice(-10).reverse().map(m => `<div class="py-1 border-b border-slate-700">${m.playerX} vs ${m.playerO} → <strong>${m.winner}</strong> <span class="text-slate-500 text-xs">${m.time}</span></div>`).join('');
-  const socket = io();
 }
 
 // ===== TOAST =====
