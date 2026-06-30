@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading & Pronunciation Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    #rp_app_container {
+      font-family: 'Kanit', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      color: #333;
+      border: 1px solid #e2e8f0;
+    }
+
+    .rp_header {
+      background-color: #4f46e5;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+    }
+
+    .rp_header h2 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .rp_content {
+      padding: 20px;
+    }
+
+    .rp_instruction {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .rp_warning {
+      display: none;
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .rp_text_display {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      padding: 20px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .rp_stress {
+      color: #b91c1c;
+      font-weight: bold;
+      border-bottom: 2px solid #b91c1c;
+    }
+
+    .rp_controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .rp_btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Kanit', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      touch-action: manipulation;
+    }
+
+    .rp_btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .rp_btn_listen {
+      background: #38bdf8;
+      color: white;
+    }
+
+    .rp_btn_listen:hover {
+      background: #0284c7;
+    }
+
+    .rp_btn_record {
+      background: #10b981;
+      color: white;
+    }
+
+    .rp_btn_record:hover {
+      background: #059669;
+    }
+
+    .rp_btn_record.recording {
+      background: #ef4444;
+      animation: rp_pulse 1.5s infinite;
+    }
+
+    .rp_btn_next {
+      background: #10b981;
+      color: white;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .rp_btn_next:hover {
+      background: #059669;
+    }
+
+    .rp_feedback {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      display: none;
+    }
+
+    .rp_result_text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .rp_correct_word {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    .rp_wrong_word {
+      color: #dc2626;
+      text-decoration: line-through;
+    }
+
+    .rp_score_box {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4f46e5;
+      margin-top: 10px;
+    }
+
+    @keyframes rp_pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    #rp_final_screen {
+      text-align: center;
+      display: none;
+    }
+
+    @media (max-width: 520px) {
+      #rp_app_container {
+        border-radius: 0;
+        max-width: 100%;
+      }
+
+      .rp_text_display {
+        font-size: 1.1rem;
+      }
+
+      .rp_btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="rp_app_container">
+    <div class="rp_header">
+      <h2>🎙️ Reading & Pronunciation</h2>
+    </div>
+
+    <div class="rp_content" id="rp_main_screen">
+      <div class="rp_instruction">
+        <strong>คำแนะนำ:</strong> คำที่เป็น <span class="rp_stress">สีแดงหนา</span> คือคำที่ต้องเน้นเสียง (Stress)
+        ให้กดฟังเสียงตัวอย่างก่อน แล้วกดไมค์เพื่ออ่านตามครับ
+      </div>
+
+      <div class="rp_warning" id="rp_warning_box"></div>
+
+      <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px; font-weight: bold;">
+        Paragraph <span id="rp_current_idx">1</span> / <span id="rp_total_idx">4</span>
+      </div>
+
+      <div class="rp_text_display" id="rp_text_box"></div>
+
+      <div class="rp_controls">
+        <button class="rp_btn rp_btn_listen" type="button" onclick="window.rp_playAudio()">
+          🔊 ฟังเสียง
+        </button>
+        <button class="rp_btn rp_btn_record" type="button" id="rp_btn_mic" onclick="window.rp_toggleRecord()">
+          🎤 เริ่มอ่าน
+        </button>
+      </div>
+
+      <div class="rp_feedback" id="rp_feedback_box">
+        <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px;">สิ่งที่คุณอ่าน (ระบบได้ยิน):</div>
+        <div class="rp_result_text" id="rp_result_display"></div>
+        <div class="rp_score_box">ความแม่นยำ: <span id="rp_score_text">0</span>%</div>
+        <button class="rp_btn rp_btn_next" type="button" onclick="window.rp_nextChunk()" style="margin-top: 15px;">ข้อถัดไป ➡️</button>
+      </div>
+    </div>
+
+    <div class="rp_content" id="rp_final_screen">
+      <h2 style="color: #10b981; font-size: 2rem; margin-bottom: 10px;">🎉 เยี่ยมมาก!</h2>
+      <p style="font-size: 1.2rem; color: #475569;">คุณฝึกอ่านครบทุกประโยคแล้ว</p>
+      <div class="rp_score_box" style="font-size: 2.5rem; margin: 20px 0;">
+        คะแนนเฉลี่ย: <span id="rp_final_score">0</span>%
+      </div>
+      <button class="rp_btn rp_btn_listen" type="button" id="rp_submit_btn" onclick="window.rp_submitMyScore()" style="margin: 0 auto 15px; width:100%; justify-content:center;">📤 บันทึกคะแนน</button>
+      <div id="rp_end_msg" style="margin-bottom:15px; font-weight:500; text-align:center;"></div>
+
+      <button class="rp_btn rp_btn_record" type="button" onclick="window.rp_restart()" style="margin: 0 auto; width:100%; justify-content:center; background:#cbd5e1; color:#333;">🔄 ฝึกอ่านอีกครั้ง</button>
+    </div>
+  </div>
+
+  <script>
+    const rp_chunks = [
+      {
+        text: "Hi, I'm Sean. I'm from Chicago in the USA. Welcome to my blog! This month I'm traveling around Asia with my parents and my sister, Lizzy.",
+        html: "Hi, I'm <span class='rp_stress'>Sean</span>. I'm from <span class='rp_stress'>Chicago</span> in the <span class='rp_stress'>USA</span>. <span class='rp_stress'>Welcome</span> to my <span class='rp_stress'>blog</span>! This <span class='rp_stress'>month</span> I'm <span class='rp_stress'>traveling</span> around <span class='rp_stress'>Asia</span> with my parents and my sister, Lizzy."
+      },
+      {
+        text: "We're visiting Hong Kong today. Hong Kong Island is only about 2.7 square kilometers, but over seven million people live here! It's an incredible city.",
+        html: "We're <span class='rp_stress'>visiting</span> Hong Kong <span class='rp_stress'>today</span>. Hong Kong Island is only about 2.7 square kilometers, but over <span class='rp_stress'>seven million</span> people live here! It's an <span class='rp_stress'>incredible</span> city."
+      },
+      {
+        text: "We're visiting the Museum of Tea Ware right now. It has the world's oldest teapot! Mom loves drinking tea and she's trying them all!",
+        html: "We're visiting the <span class='rp_stress'>Museum</span> of <span class='rp_stress'>Tea Ware</span> right <span class='rp_stress'>now</span>. It has the world's <span class='rp_stress'>oldest</span> teapot! Mom <span class='rp_stress'>loves</span> drinking tea and she's <span class='rp_stress'>trying</span> them <span class='rp_stress'>all</span>!"
+      },
+      {
+        text: "We’re sightseeing in the center at the moment. It’s amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
+        html: "We’re <span class='rp_stress'>sightseeing</span> in the center at the <span class='rp_stress'>moment</span>. It’s <span class='rp_stress'>amazing</span> because Hong Kong is really <span class='rp_stress'>small</span>, but it has over a <span class='rp_stress'>thousand</span> skyscrapers!"
+      }
+    ];
+
+    let rp_currentIndex = 0;
+    let rp_isRecording = false;
+    let rp_recognition = null;
+    let rp_scores = [];
+
+    const RP_PARENT_SAVE_TYPE = 'RP_SAVE_SCORE';
+    const RP_PARENT_RESULT_TYPE = 'RP_SAVE_RESULT';
+
+    function rp_showWarning(message) {
+      const box = document.getElementById('rp_warning_box');
+      if (!box) return;
+      if (!message) {
+        box.style.display = 'none';
+        box.innerHTML = '';
+        return;
+      }
+      box.style.display = 'block';
+      box.innerHTML = message;
+    }
+
+    function rp_resetMicButton(label) {
+      rp_isRecording = false;
+      const btn = document.getElementById('rp_btn_mic');
+      if (!btn) return;
+      btn.classList.remove('recording');
+      btn.disabled = false;
+      btn.innerHTML = label || '🎤 กดเพื่ออ่านอีกครั้ง';
+    }
+
+    function rp_getSpeechRecognitionCtor() {
+      return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+    }
+
+    function rp_initSpeech() {
+      const SpeechRecognition = rp_getSpeechRecognitionCtor();
+
+      if (!SpeechRecognition) {
+        rp_showWarning('⚠️ เบราว์เซอร์นี้ยังไม่รองรับ Speech Recognition แนะนำให้เปิดด้วย Google Chrome เวอร์ชันล่าสุด');
+        return false;
+      }
+
+      if (rp_recognition) return true;
+
+      rp_recognition = new SpeechRecognition();
+      rp_recognition.lang = 'en-US';
+      rp_recognition.interimResults = false;
+      rp_recognition.continuous = false;
+      rp_recognition.maxAlternatives = 1;
+
+      rp_recognition.onresult = function(event) {
+        const transcript = event.results?.[0]?.[0]?.transcript || '';
+        rp_evaluatePronunciation(transcript);
+        rp_resetMicButton();
+      };
+
+      rp_recognition.onend = function() {
+        rp_resetMicButton();
+      };
+
+      rp_recognition.onerror = function(event) {
+        console.error('Speech error:', event.error);
+
+        let message = '⚠️ ระบบฟังเสียงมีปัญหา กรุณาลองใหม่อีกครั้ง';
+
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          message = '⚠️ เบราว์เซอร์ไม่อนุญาตให้ใช้ไมโครโฟน ตรวจสอบว่าเปิดผ่าน HTTPS, กด Allow ไมค์แล้ว และถ้าฝังผ่าน iframe ต้องใส่ <code>allow="microphone"</code>';
+        } else if (event.error === 'no-speech') {
+          message = '⚠️ ระบบไม่ได้ยินเสียง ลองพูดให้ชัดขึ้นหรือขยับไมค์เข้าใกล้ขึ้น';
+        } else if (event.error === 'audio-capture') {
+          message = '⚠️ ไม่พบไมโครโฟน หรือไมโครโฟนถูกใช้งานโดยแอปอื่นอยู่';
+        } else if (event.error === 'network') {
+          message = '⚠️ ระบบตรวจเสียงต้องใช้อินเทอร์เน็ต กรุณาตรวจสอบการเชื่อมต่อ';
+        }
+
+        rp_showWarning(message);
+        rp_resetMicButton();
+      };
+
+      return true;
+    }
+
+    async function rp_ensureMicPermission() {
+      if (!window.isSecureContext) {
+        return {
+          ok: false,
+          message: '⚠️ หน้านี้ไม่ได้เปิดผ่าน HTTPS เบราว์เซอร์จึงไม่อนุญาตให้ใช้ไมโครโฟน กรุณาโฮสต์บน GitHub Pages / Vercel / Netlify แล้วเปิดลิงก์ HTTPS'
+        };
+      }
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        return {
+          ok: false,
+          message: '⚠️ เบราว์เซอร์นี้ไม่รองรับการขอสิทธิ์ไมโครโฟน กรุณาใช้ Google Chrome เวอร์ชันล่าสุด'
+        };
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(track => track.stop());
+        return { ok: true };
+      } catch (err) {
+        console.error('Microphone permission error:', err);
+        return {
+          ok: false,
+          message: '⚠️ ไม่สามารถใช้ไมโครโฟนได้: กรุณากด Allow / อนุญาตไมค์ในเบราว์เซอร์ หรือเช็กว่า iframe มี <code>allow="microphone"</code>'
+        };
+      }
+    }
+
+    function rp_loadChunk() {
+      document.getElementById('rp_current_idx').innerText = rp_currentIndex + 1;
+      document.getElementById('rp_total_idx').innerText = rp_chunks.length;
+      document.getElementById('rp_text_box').innerHTML = rp_chunks[rp_currentIndex].html;
+      document.getElementById('rp_feedback_box').style.display = 'none';
+
+      rp_showWarning('');
+
+      const btn = document.getElementById('rp_btn_mic');
+      btn.classList.remove('recording');
+      btn.disabled = false;
+      btn.innerHTML = '🎤 เริ่มอ่าน';
+    }
+
+    window.rp_playAudio = function() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const textToRead = rp_chunks[rp_currentIndex].text;
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.85;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        rp_showWarning('⚠️ เบราว์เซอร์นี้ไม่รองรับระบบอ่านข้อความอัตโนมัติ');
+      }
+    };
+
+    window.rp_toggleRecord = async function() {
+      if (!rp_initSpeech()) return;
+
+      if (rp_isRecording) {
+        try {
+          rp_recognition.stop();
+        } catch (e) {
+          console.error(e);
+        }
+        rp_resetMicButton();
+        return;
+      }
+
+      const btn = document.getElementById('rp_btn_mic');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ กำลังขอสิทธิ์ไมค์...';
+
+      const permission = await rp_ensureMicPermission();
+      if (!permission.ok) {
+        rp_showWarning(permission.message);
+        rp_resetMicButton('🎤 เริ่มอ่าน');
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      try {
+        rp_showWarning('');
+        document.getElementById('rp_feedback_box').style.display = 'none';
+
+        rp_recognition.start();
+        rp_isRecording = true;
+
+        btn.disabled = false;
+        btn.classList.add('recording');
+        btn.innerHTML = '⏹️ กดเพื่อหยุดฟัง';
+      } catch (e) {
+        console.error(e);
+        rp_showWarning('⚠️ เริ่มบันทึกเสียงไม่สำเร็จ กรุณากดอีกครั้ง');
+        rp_resetMicButton();
+      }
+    };
+
+    function rp_cleanString(str) {
+      return (str || '')
+        .toLowerCase()
+        .replace(/[’']/g, '')
+        .replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function rp_evaluatePronunciation(transcript) {
+      if (!transcript) return;
+
+      const originalText = rp_cleanString(rp_chunks[rp_currentIndex].text);
+      const spokenText = rp_cleanString(transcript);
+
+      const originalWords = originalText.split(' ').filter(Boolean);
+      const spokenWords = spokenText.split(' ').filter(Boolean);
+
+      let correctCount = 0;
+      let resultHtml = '';
+
+      originalWords.forEach(function(word) {
+        if (spokenWords.includes(word)) {
+          correctCount++;
+          resultHtml += '<span class="rp_correct_word">' + word + '</span> ';
+        } else {
+          resultHtml += '<span class="rp_wrong_word">' + word + '</span> ';
+        }
+      });
+
+      const percentage = Math.min(100, Math.round((correctCount / originalWords.length) * 100));
+
+      document.getElementById('rp_result_display').innerHTML = resultHtml;
+      document.getElementById('rp_score_text').innerText = percentage;
+      document.getElementById('rp_feedback_box').style.display = 'block';
+
+      rp_scores[rp_currentIndex] = percentage;
+    }
+
+    window.rp_nextChunk = function() {
+      window.speechSynthesis.cancel();
+
+      if (rp_recognition && rp_isRecording) {
+        try {
+          rp_recognition.stop();
+        } catch (e) {
+          console.error(e);
+        }
+        rp_resetMicButton();
+      }
+
+      if (rp_currentIndex < rp_chunks.length - 1) {
+        rp_currentIndex++;
+        rp_loadChunk();
+      } else {
+        document.getElementById('rp_main_screen').style.display = 'none';
+        document.getElementById('rp_final_screen').style.display = 'block';
+
+        const validScores = rp_scores.filter(score => typeof score === 'number');
+        const total = validScores.reduce((sum, score) => sum + score, 0);
+        const avg = Math.round(total / validScores.length) || 0;
+
+        document.getElementById('rp_final_score').innerText = avg;
+        document.getElementById('rp_submit_btn').style.display = 'flex';
+        document.getElementById('rp_submit_btn').disabled = false;
+        document.getElementById('rp_submit_btn').innerText = '📤 บันทึกคะแนน';
+        document.getElementById('rp_end_msg').innerText = '';
+      }
+    };
+
+    window.rp_restart = function() {
+      window.speechSynthesis.cancel();
+
+      if (rp_recognition && rp_isRecording) {
+        try {
+          rp_recognition.stop();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      rp_currentIndex = 0;
+      rp_scores = [];
+      rp_resetMicButton('🎤 เริ่มอ่าน');
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'block';
+      rp_loadChunk();
+    };
+
+    window.rp_submitMyScore = function() {
+      const avgScore = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
+      const endBox = document.getElementById('rp_end_msg');
+      const btn = document.getElementById('rp_submit_btn');
+
+      if (btn) {
+        btn.innerText = '⏳ กำลังส่งคะแนน...';
+        btn.disabled = true;
+      }
+
+      /*
+        ทางออก B:
+        ไฟล์นี้ถูกโฮสต์อยู่คนละ origin กับ Google Apps Script
+        จึงใช้ google.script.run โดยตรงไม่ได้
+        ต้องส่งคะแนนกลับไปให้หน้าแม่ของ LMS ด้วย postMessage
+        แล้วให้หน้าแม่เรียก google.script.run.saveScore(...) ต่อ
+      */
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: RP_PARENT_SAVE_TYPE,
+          payload: {
+            activityCode: 'Pronunciation Practice',
+            unit: 'Unit 1',
+            activityType: 'กิจกรรมย่อย',
+            avgScore: avgScore
+          }
+        }, '*');
+
+        if (endBox) {
+          endBox.innerText = '⏳ ส่งคะแนนกลับไปยังระบบ LMS แล้ว กำลังรอผลบันทึก...';
+          endBox.style.color = '#4f46e5';
+        }
+
+        setTimeout(function() {
+          if (btn && btn.disabled) {
+            btn.disabled = false;
+            btn.innerText = '📤 ส่งคะแนนอีกครั้ง';
+          }
+        }, 8000);
+
+        return;
+      }
+
+      if (endBox) {
+        endBox.innerText = '⚠️ โหมดทดสอบนอก LMS: ตรวจเสียงได้แล้ว แต่ยังไม่ได้เชื่อมกับระบบบันทึกคะแนน';
+        endBox.style.color = '#ef4444';
+      }
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = '📤 บันทึกคะแนน';
+      }
+    };
+
+    window.addEventListener('message', function(event) {
+      const data = event.data || {};
+      if (data.type !== RP_PARENT_RESULT_TYPE) return;
+
+      const endBox = document.getElementById('rp_end_msg');
+      const btn = document.getElementById('rp_submit_btn');
+
+      if (data.ok) {
+        if (btn) btn.style.display = 'none';
+        if (endBox) {
+          endBox.innerText = data.message || '✅ บันทึกคะแนนสำเร็จ! ตรวจสอบได้ที่ My Folio';
+          endBox.style.color = '#10b981';
+        }
+      } else {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = '📤 ส่งคะแนนอีกครั้ง';
+        }
+        if (endBox) {
+          endBox.innerText = data.message || '⚠️ บันทึกคะแนนไม่สำเร็จ กรุณาลองใหม่';
+          endBox.style.color = '#ef4444';
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      rp_loadChunk();
+
+      if (!window.isSecureContext) {
+        rp_showWarning('⚠️ หมายเหตุ: ระบบตรวจเสียงต้องเปิดผ่าน HTTPS เท่านั้น ถ้าเปิดจากไฟล์ในเครื่องหรือ HTTP ไมค์อาจใช้ไม่ได้');
+      }
+    });
+  </script>
+</body>
+</html>
