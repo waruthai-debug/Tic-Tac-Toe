@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reading & Pronunciation Practice - Balanced Paragraph Select</title>
+  <title>Reading & Pronunciation Practice - Grade Select</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 
     #rp_app_container {
       font-family: 'Kanit', sans-serif;
-      max-width: 680px;
+      max-width: 760px;
       margin: 0 auto;
       background: #ffffff;
       border-radius: 12px;
@@ -39,9 +39,7 @@
       font-size: 1.3rem;
     }
 
-    .rp_content {
-      padding: 20px;
-    }
+    .rp_content { padding: 20px; }
 
     .rp_instruction {
       background: #e0e7ff;
@@ -106,53 +104,18 @@
       text-decoration: none;
     }
 
-    .rp_btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .rp_btn_listen {
-      background: #38bdf8;
-      color: white;
-    }
-
-    .rp_btn_listen:hover {
-      background: #0284c7;
-    }
-
-    .rp_btn_record {
-      background: #10b981;
-      color: white;
-    }
-
-    .rp_btn_record:hover {
-      background: #059669;
-    }
-
-    .rp_btn_record.recording {
-      background: #ef4444;
-      animation: rp_pulse 1.5s infinite;
-    }
-
-    .rp_btn_next {
-      background: #10b981;
-      color: white;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .rp_btn_next:hover {
-      background: #059669;
-    }
-
-    .rp_btn_secondary {
-      background: #e2e8f0;
-      color: #334155;
-    }
-
-    .rp_btn_secondary:hover {
-      background: #cbd5e1;
-    }
+    .rp_btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .rp_btn_listen { background: #38bdf8; color: white; }
+    .rp_btn_listen:hover { background: #0284c7; }
+    .rp_btn_record { background: #10b981; color: white; }
+    .rp_btn_record:hover { background: #059669; }
+    .rp_btn_record.recording { background: #ef4444; animation: rp_pulse 1.5s infinite; }
+    .rp_btn_next { background: #10b981; color: white; width: 100%; justify-content: center; }
+    .rp_btn_next:hover { background: #059669; }
+    .rp_btn_secondary { background: #e2e8f0; color: #334155; }
+    .rp_btn_secondary:hover { background: #cbd5e1; }
+    .rp_btn_download { background: #f59e0b; color: white; width: 100%; justify-content: center; }
+    .rp_btn_download:hover { background: #d97706; }
 
     .rp_feedback {
       margin-top: 15px;
@@ -162,21 +125,9 @@
       display: none;
     }
 
-    .rp_result_text {
-      font-size: 1.05rem;
-      line-height: 1.65;
-      margin-bottom: 10px;
-    }
-
-    .rp_correct_word {
-      color: #15803d;
-      font-weight: 600;
-    }
-
-    .rp_wrong_word {
-      color: #dc2626;
-      text-decoration: line-through;
-    }
+    .rp_result_text { font-size: 1.05rem; line-height: 1.65; margin-bottom: 10px; }
+    .rp_correct_word { color: #15803d; font-weight: 600; }
+    .rp_wrong_word { color: #dc2626; text-decoration: line-through; }
 
     .rp_score_box {
       text-align: center;
@@ -186,12 +137,19 @@
       margin-top: 10px;
     }
 
+    .rp_grade_grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
     .rp_paragraph_grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 12px;
     }
 
+    .rp_grade_card,
     .rp_paragraph_card {
       border: 1px solid #e2e8f0;
       background: #ffffff;
@@ -203,31 +161,25 @@
       font-family: 'Kanit', sans-serif;
     }
 
+    .rp_grade_card {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .rp_grade_card:hover,
     .rp_paragraph_card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
       border-color: #818cf8;
     }
 
-    .rp_card_title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #4f46e5;
-      margin-bottom: 6px;
-    }
-
-    .rp_card_meta {
-      font-size: 0.86rem;
-      color: #64748b;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .rp_card_preview {
-      color: #334155;
-      font-size: 0.92rem;
-      line-height: 1.6;
-    }
+    .rp_grade_big { font-size: 2.1rem; font-weight: 800; color: #4f46e5; margin-bottom: 4px; }
+    .rp_card_title { font-size: 1.05rem; font-weight: 700; color: #4f46e5; margin-bottom: 6px; }
+    .rp_card_meta { font-size: 0.86rem; color: #64748b; margin-bottom: 8px; font-weight: 500; }
+    .rp_card_preview { color: #334155; font-size: 0.92rem; line-height: 1.6; }
 
     .rp_topbar {
       display: flex;
@@ -238,12 +190,7 @@
       flex-wrap: wrap;
     }
 
-    .rp_progress_text {
-      font-size: 0.9rem;
-      color: #64748b;
-      font-weight: bold;
-    }
-
+    .rp_progress_text { font-size: 0.9rem; color: #64748b; font-weight: bold; }
     .rp_pill {
       display: inline-block;
       background: #eef2ff;
@@ -252,6 +199,7 @@
       padding: 5px 10px;
       font-size: 0.85rem;
       font-weight: 700;
+      margin-right: 4px;
     }
 
     .rp_transcript_box {
@@ -266,35 +214,84 @@
       line-height: 1.6;
     }
 
+    .rp_result_card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .rp_result_meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+      text-align: left;
+    }
+
+    .rp_meta_item {
+      background: #eef2ff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: #334155;
+      line-height: 1.4;
+    }
+
+    .rp_meta_label { font-size: 0.78rem; color: #64748b; font-weight: 600; }
+    .rp_meta_value { font-size: 1rem; color: #3730a3; font-weight: 700; }
+
+    .rp_student_form {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 10px;
+      margin: 14px 0 10px;
+      text-align: left;
+    }
+
+    .rp_field label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 5px;
+    }
+
+    .rp_field input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .rp_field input:focus {
+      border-color: #818cf8;
+      box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.18);
+    }
+
     @keyframes rp_pulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
       70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
+    #rp_select_screen,
     #rp_main_screen,
-    #rp_final_screen {
-      display: none;
-    }
+    #rp_final_screen { display: none; }
+    #rp_final_screen { text-align: center; }
 
-    #rp_final_screen {
-      text-align: center;
-    }
-
-    @media (max-width: 520px) {
-      #rp_app_container {
-        border-radius: 0;
-        max-width: 100%;
-      }
-
-      .rp_text_display {
-        font-size: 1.05rem;
-      }
-
-      .rp_btn {
-        width: 100%;
-        justify-content: center;
-      }
+    @media (max-width: 560px) {
+      #rp_app_container { border-radius: 0; max-width: 100%; }
+      .rp_text_display { font-size: 1.05rem; }
+      .rp_btn { width: 100%; justify-content: center; }
+      .rp_grade_grid,
+      .rp_result_meta,
+      .rp_student_form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -305,9 +302,25 @@
       <h2>🎙️ Reading & Pronunciation</h2>
     </div>
 
-    <div class="rp_content" id="rp_select_screen">
+    <div class="rp_content" id="rp_grade_screen">
       <div class="rp_instruction">
-        <strong>เลือก Paragraph ที่ต้องการสอบ:</strong> ระบบจะแบ่ง Paragraph ที่เลือกเป็นช่วงอ่านขนาดใกล้เคียงกัน โดยให้จบความในแต่ละช่วง แล้วคิดคะแนนเฉลี่ยเฉพาะ Paragraph นั้นครับ
+        <strong>เลือกระดับชั้นที่ต้องการสอบ:</strong> หลังจากเลือกระดับชั้นแล้ว ระบบจะแสดง Paragraph ของระดับชั้นนั้นให้เลือกฝึกอ่านครับ
+      </div>
+      <div class="rp_grade_grid" id="rp_grade_grid"></div>
+    </div>
+
+    <div class="rp_content" id="rp_select_screen">
+      <div class="rp_topbar">
+        <div>
+          <span class="rp_pill" id="rp_selected_grade_label">ม.5</span>
+          <span class="rp_progress_text">เลือก Paragraph ที่ต้องการสอบ</span>
+        </div>
+        <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToGradeSelect()" style="padding: 8px 14px; font-size: 0.9rem;">
+          ← เลือกระดับชั้น
+        </button>
+      </div>
+      <div class="rp_instruction">
+        ระบบจะแบ่ง Paragraph ที่เลือกเป็นช่วงอ่านขนาดใกล้เคียงกัน โดยให้จบความในแต่ละช่วง แล้วคิดคะแนนเฉลี่ยเฉพาะ Paragraph นั้นครับ
       </div>
       <div class="rp_paragraph_grid" id="rp_paragraph_grid"></div>
     </div>
@@ -322,10 +335,11 @@
 
       <div class="rp_topbar">
         <div>
+          <span class="rp_pill" id="rp_selected_grade_read_label">ม.5</span>
           <span class="rp_pill" id="rp_selected_paragraph_label">Paragraph 1</span>
           <span class="rp_progress_text">ช่วงที่ <span id="rp_current_idx">1</span> / <span id="rp_total_idx">1</span></span>
         </div>
-        <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToSelect()" style="padding: 8px 14px; font-size: 0.9rem;">
+        <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToParagraphSelect()" style="padding: 8px 14px; font-size: 0.9rem;">
           ← เลือก Paragraph อื่น
         </button>
       </div>
@@ -334,7 +348,7 @@
 
       <div class="rp_controls">
         <button class="rp_btn rp_btn_listen" type="button" onclick="window.rp_playAudio()">
-          🔊 ฟังเสียง
+          🔊 ฟังเสียงช้า
         </button>
         <button class="rp_btn rp_btn_record" type="button" id="rp_btn_mic" onclick="window.rp_toggleRecord()">
           🎤 เริ่มอ่าน
@@ -352,13 +366,49 @@
     </div>
 
     <div class="rp_content" id="rp_final_screen">
-      <h2 style="color: #10b981; font-size: 2rem; margin-bottom: 10px;">🎉 เยี่ยมมาก!</h2>
-      <p style="font-size: 1.1rem; color: #475569; margin-top:0;">
-        คุณฝึกอ่านครบ <span id="rp_final_paragraph_name">Paragraph</span> แล้ว
-      </p>
-      <div class="rp_score_box" style="font-size: 2.5rem; margin: 20px 0;">
-        คะแนนเฉลี่ย: <span id="rp_final_score">0</span>%
+      <div class="rp_result_card" id="rp_result_card">
+        <h2 style="color: #10b981; font-size: 2rem; margin: 0 0 8px;">🎉 เยี่ยมมาก!</h2>
+        <p style="font-size: 1.05rem; color: #475569; margin:0 0 10px;">
+          คุณฝึกอ่านครบ <span id="rp_final_grade_name">ม.5</span> • <span id="rp_final_paragraph_name">Paragraph</span> แล้ว
+        </p>
+        <div class="rp_score_box" style="font-size: 2.7rem; margin: 12px 0;">
+          คะแนนเฉลี่ย: <span id="rp_final_score">0</span>%
+        </div>
+
+        <div class="rp_result_meta">
+          <div class="rp_meta_item">
+            <div class="rp_meta_label">ระดับชั้น</div>
+            <div class="rp_meta_value" id="rp_result_grade">ม.5</div>
+          </div>
+          <div class="rp_meta_item">
+            <div class="rp_meta_label">บทอ่าน</div>
+            <div class="rp_meta_value" id="rp_result_paragraph">Paragraph 1</div>
+          </div>
+          <div class="rp_meta_item">
+            <div class="rp_meta_label">จำนวนช่วงอ่าน</div>
+            <div class="rp_meta_value"><span id="rp_result_parts">0</span> ช่วง</div>
+          </div>
+          <div class="rp_meta_item">
+            <div class="rp_meta_label">วันที่ทำแบบฝึก</div>
+            <div class="rp_meta_value" id="rp_result_date">-</div>
+          </div>
+        </div>
+
+        <div class="rp_student_form">
+          <div class="rp_field">
+            <label for="rp_student_name">ชื่อ - นามสกุล</label>
+            <input id="rp_student_name" type="text" placeholder="เช่น ด.ช. / ด.ญ. ...">
+          </div>
+          <div class="rp_field">
+            <label for="rp_student_number">เลขที่</label>
+            <input id="rp_student_number" type="number" min="1" inputmode="numeric" placeholder="เช่น 12">
+          </div>
+        </div>
       </div>
+
+      <button class="rp_btn rp_btn_download" type="button" id="rp_download_btn" onclick="window.rp_downloadResultImage()" style="margin: 0 auto 12px;">
+        🖼️ ดาวน์โหลดผลคะแนนเป็นภาพ
+      </button>
       <button class="rp_btn rp_btn_listen" type="button" id="rp_submit_btn" onclick="window.rp_submitMyScore()" style="margin: 0 auto 12px; width:100%; justify-content:center;">
         📤 บันทึกคะแนน
       </button>
@@ -367,110 +417,315 @@
       <button class="rp_btn rp_btn_record" type="button" onclick="window.rp_restartSelected()" style="margin: 0 auto 10px; width:100%; justify-content:center; background:#cbd5e1; color:#333;">
         🔄 ฝึก Paragraph นี้อีกครั้ง
       </button>
-      <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToSelect()" style="margin: 0 auto; width:100%; justify-content:center;">
+      <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToParagraphSelect()" style="margin: 0 auto 10px; width:100%; justify-content:center;">
         📚 เลือก Paragraph อื่น
+      </button>
+      <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToGradeSelect()" style="margin: 0 auto; width:100%; justify-content:center;">
+        🏫 เลือกระดับชั้นอื่น
       </button>
     </div>
   </div>
 
   <script>
-    const rp_paragraphSets = [
+    const rp_gradeSets = [
       {
-        id: 'p1',
-        title: 'Paragraph 1',
-        unit: 'Unit 1',
-        activityCode: 'Pronunciation Practice - Paragraph 1',
-        description: 'Sean introduces his blog and describes Hong Kong.',
-        chunks: [
-          {
-            text: "Hi, I'm Sean. I'm from Chicago in the USA. Welcome to my blog! This month I'm traveling around Asia with my parents and my sister, Lizzy.",
-            stress: ['Sean', 'Chicago', 'USA', 'Welcome', 'blog', 'month', 'traveling', 'Asia', 'Lizzy']
-          },
-          {
-            text: "We're visiting Hong Kong today. Hong Kong Island is only about 2.7 square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
-            scoreText: "We're visiting Hong Kong today. Hong Kong Island is only about two point seven square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
-            stress: ['visiting', 'Hong Kong', 'Hong Kong Island', '2.7 square kilometers', 'seven million', 'incredible city', 'ancient', 'modern']
-          },
-          {
-            text: "There are historical buildings next to hi-tech skyscrapers: our hotel is in an old house between two really tall buildings!",
-            scoreText: "There are historical buildings next to high tech skyscrapers: our hotel is in an old house between two really tall buildings!",
-            stress: ['historical buildings', 'hi-tech skyscrapers', 'hotel', 'old house', 'tall buildings']
-          },
-          {
-            text: "There's lots of traffic of course, but the city also has some beautiful parks and nature reserves. That's something most people don't know.",
-            stress: ['traffic', 'beautiful parks', 'nature reserves', "don't know"]
-          }
-        ]
+            "id": "m5",
+            "title": "ม.5",
+            "subtitle": "Hong Kong Travel Blog",
+            "description": "บทอ่านเดิมที่สร้างไว้แล้ว",
+            "paragraphs": [
+                  {
+                        "id": "m5-p1",
+                        "title": "Paragraph 1",
+                        "unit": "ม.5 Unit 1",
+                        "activityCode": "Pronunciation Practice - ม.5 - Paragraph 1",
+                        "description": "Sean introduces his blog and describes Hong Kong.",
+                        "chunks": [
+                              {
+                                    "text": "Hi, I'm Sean. I'm from Chicago in the USA. Welcome to my blog! This month I'm traveling around Asia with my parents and my sister, Lizzy.",
+                                    "stress": [
+                                          "Sean",
+                                          "Chicago",
+                                          "USA",
+                                          "Welcome",
+                                          "blog",
+                                          "month",
+                                          "traveling",
+                                          "Asia",
+                                          "Lizzy"
+                                    ]
+                              },
+                              {
+                                    "text": "We're visiting Hong Kong today. Hong Kong Island is only about 2.7 square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
+                                    "scoreText": "We're visiting Hong Kong today. Hong Kong Island is only about two point seven square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
+                                    "stress": [
+                                          "visiting",
+                                          "Hong Kong",
+                                          "Hong Kong Island",
+                                          "2.7 square kilometers",
+                                          "seven million",
+                                          "incredible city",
+                                          "ancient",
+                                          "modern"
+                                    ]
+                              },
+                              {
+                                    "text": "There are historical buildings next to hi-tech skyscrapers: our hotel is in an old house between two really tall buildings!",
+                                    "scoreText": "There are historical buildings next to high tech skyscrapers: our hotel is in an old house between two really tall buildings!",
+                                    "stress": [
+                                          "historical buildings",
+                                          "hi-tech skyscrapers",
+                                          "hotel",
+                                          "old house",
+                                          "tall buildings"
+                                    ]
+                              },
+                              {
+                                    "text": "There's lots of traffic of course, but the city also has some beautiful parks and nature reserves. That's something most people don't know.",
+                                    "stress": [
+                                          "traffic",
+                                          "beautiful parks",
+                                          "nature reserves",
+                                          "don't know"
+                                    ]
+                              }
+                        ]
+                  },
+                  {
+                        "id": "m5-p2",
+                        "title": "Paragraph 2",
+                        "unit": "ม.5 Unit 1",
+                        "activityCode": "Pronunciation Practice - ม.5 - Paragraph 2",
+                        "description": "Sean visits the Tea Ware museum and the city center.",
+                        "chunks": [
+                              {
+                                    "text": "Posted at 10:03 a.m. We're visiting the 'Flagstaff House Museum of Tea Ware' right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
+                                    "scoreText": "Posted at ten oh three a m. We're visiting the Flagstaff House Museum of Tea Ware right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
+                                    "stress": [
+                                          "10:03 a.m.",
+                                          "Flagstaff House Museum of Tea Ware",
+                                          "right now",
+                                          "mom's choice",
+                                          "opposite",
+                                          "don't mind"
+                                    ]
+                              },
+                              {
+                                    "text": "There are hundreds of different teapots here and you can try lots of types of tea. It has the world's oldest teapot! I don't often drink tea, but it is a big part of Asian culture.",
+                                    "stress": [
+                                          "hundreds",
+                                          "teapots",
+                                          "types of tea",
+                                          "oldest teapot",
+                                          "don't often",
+                                          "big part",
+                                          "Asian culture"
+                                    ]
+                              },
+                              {
+                                    "text": "Mom loves drinking tea and she's trying them all! Posted at 10:45 a.m. There isn't a subway station near here so at the moment we're walking to the city center...",
+                                    "scoreText": "Mom loves drinking tea and she's trying them all! Posted at ten forty five a m. There isn't a subway station near here so at the moment we're walking to the city center.",
+                                    "stress": [
+                                          "loves drinking tea",
+                                          "trying them all",
+                                          "10:45 a.m.",
+                                          "isn't",
+                                          "subway station",
+                                          "at the moment",
+                                          "walking",
+                                          "city center"
+                                    ]
+                              },
+                              {
+                                    "text": "Posted at 12:30 p.m. We’re sightseeing in the center at the moment. It’s amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
+                                    "scoreText": "Posted at twelve thirty p m. We're sightseeing in the center at the moment. It's amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
+                                    "stress": [
+                                          "12:30 p.m.",
+                                          "sightseeing",
+                                          "center",
+                                          "at the moment",
+                                          "amazing",
+                                          "Hong Kong",
+                                          "really small",
+                                          "thousand skyscrapers"
+                                    ]
+                              },
+                              {
+                                    "text": "At the moment I’m standing in front of the Bank of China Tower and I’m looking up... It’s 367 meters tall!",
+                                    "scoreText": "At the moment I'm standing in front of the Bank of China Tower and I'm looking up. It's three hundred and sixty seven meters tall!",
+                                    "stress": [
+                                          "At the moment",
+                                          "standing",
+                                          "Bank of China Tower",
+                                          "looking up",
+                                          "367 meters tall"
+                                    ]
+                              }
+                        ]
+                  },
+                  {
+                        "id": "m5-p3",
+                        "title": "Paragraph 3",
+                        "unit": "ม.5 Unit 1",
+                        "activityCode": "Pronunciation Practice - ม.5 - Paragraph 3",
+                        "description": "Sean goes up the tower and asks readers to comment.",
+                        "chunks": [
+                              {
+                                    "text": "Posted at 12:35 p.m. We’re going up to the 43rd floor because there’s a famous observation deck with an amazing view.",
+                                    "scoreText": "Posted at twelve thirty five p m. We're going up to the forty third floor because there's a famous observation deck with an amazing view.",
+                                    "stress": [
+                                          "12:35 p.m.",
+                                          "going up",
+                                          "43rd floor",
+                                          "observation deck",
+                                          "amazing view"
+                                    ]
+                              },
+                              {
+                                    "text": "There are lots of apartment buildings, shops and offices in this city and it feels like you can see them all from the top of the tower!",
+                                    "stress": [
+                                          "apartment buildings",
+                                          "shops",
+                                          "offices",
+                                          "top of the tower"
+                                    ]
+                              },
+                              {
+                                    "text": "My sister is hiding behind me because she’s frightened of this view. Posted at 1:15 p.m. We’re feeling hungry and there aren’t any cafeterias here, so we’re going back down now...",
+                                    "scoreText": "My sister is hiding behind me because she's frightened of this view. Posted at one fifteen p m. We're feeling hungry and there aren't any cafeterias here, so we're going back down now.",
+                                    "stress": [
+                                          "sister",
+                                          "hiding",
+                                          "frightened",
+                                          "view",
+                                          "1:15 p.m.",
+                                          "feeling hungry",
+                                          "aren't",
+                                          "cafeterias",
+                                          "going back down"
+                                    ]
+                              },
+                              {
+                                    "text": "42nd floor... 41st floor... 40th floor... Is there a quicker way?! Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
+                                    "scoreText": "forty second floor. forty first floor. fortieth floor. Is there a quicker way? Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
+                                    "stress": [
+                                          "42nd floor",
+                                          "41st floor",
+                                          "40th floor",
+                                          "quicker way",
+                                          "vacation",
+                                          "interesting places",
+                                          "Leave a comment",
+                                          "blog",
+                                          "let me know"
+                                    ]
+                              }
+                        ]
+                  }
+            ]
       },
       {
-        id: 'p2',
-        title: 'Paragraph 2',
-        unit: 'Unit 1',
-        activityCode: 'Pronunciation Practice - Paragraph 2',
-        description: 'Sean visits the Tea Ware museum and the city center.',
-        chunks: [
-          {
-            text: "Posted at 10:03 a.m. We're visiting the 'Flagstaff House Museum of Tea Ware' right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
-            scoreText: "Posted at ten oh three a m. We're visiting the Flagstaff House Museum of Tea Ware right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
-            stress: ['10:03 a.m.', 'Flagstaff House Museum of Tea Ware', 'right now', "mom's choice", 'opposite', "don't mind"]
-          },
-          {
-            text: "There are hundreds of different teapots here and you can try lots of types of tea. It has the world's oldest teapot! I don't often drink tea, but it is a big part of Asian culture.",
-            stress: ['hundreds', 'teapots', 'types of tea', 'oldest teapot', "don't often", 'big part', 'Asian culture']
-          },
-          {
-            text: "Mom loves drinking tea and she's trying them all! Posted at 10:45 a.m. There isn't a subway station near here so at the moment we're walking to the city center...",
-            scoreText: "Mom loves drinking tea and she's trying them all! Posted at ten forty five a m. There isn't a subway station near here so at the moment we're walking to the city center.",
-            stress: ['loves drinking tea', 'trying them all', '10:45 a.m.', "isn't", 'subway station', 'at the moment', 'walking', 'city center']
-          },
-          {
-            text: "Posted at 12:30 p.m. We’re sightseeing in the center at the moment. It’s amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
-            scoreText: "Posted at twelve thirty p m. We're sightseeing in the center at the moment. It's amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
-            stress: ['12:30 p.m.', 'sightseeing', 'center', 'at the moment', 'amazing', 'Hong Kong', 'really small', 'thousand skyscrapers']
-          },
-          {
-            text: "At the moment I’m standing in front of the Bank of China Tower and I’m looking up... It’s 367 meters tall!",
-            scoreText: "At the moment I'm standing in front of the Bank of China Tower and I'm looking up. It's three hundred and sixty seven meters tall!",
-            stress: ['At the moment', 'standing', 'Bank of China Tower', 'looking up', '367 meters tall']
-          }
-        ]
-      },
-      {
-        id: 'p3',
-        title: 'Paragraph 3',
-        unit: 'Unit 1',
-        activityCode: 'Pronunciation Practice - Paragraph 3',
-        description: 'Sean goes up the tower and asks readers to comment.',
-        chunks: [
-          {
-            text: "Posted at 12:35 p.m. We’re going up to the 43rd floor because there’s a famous observation deck with an amazing view.",
-            scoreText: "Posted at twelve thirty five p m. We're going up to the forty third floor because there's a famous observation deck with an amazing view.",
-            stress: ['12:35 p.m.', 'going up', '43rd floor', 'observation deck', 'amazing view']
-          },
-          {
-            text: "There are lots of apartment buildings, shops and offices in this city and it feels like you can see them all from the top of the tower!",
-            stress: ['apartment buildings', 'shops', 'offices', 'top of the tower']
-          },
-          {
-            text: "My sister is hiding behind me because she’s frightened of this view. Posted at 1:15 p.m. We’re feeling hungry and there aren’t any cafeterias here, so we’re going back down now...",
-            scoreText: "My sister is hiding behind me because she's frightened of this view. Posted at one fifteen p m. We're feeling hungry and there aren't any cafeterias here, so we're going back down now.",
-            stress: ['sister', 'hiding', 'frightened', 'view', '1:15 p.m.', 'feeling hungry', "aren't", 'cafeterias', 'going back down']
-          },
-          {
-            text: "42nd floor... 41st floor... 40th floor... Is there a quicker way?! Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
-            scoreText: "forty second floor. forty first floor. fortieth floor. Is there a quicker way? Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
-            stress: ['42nd floor', '41st floor', '40th floor', 'quicker way', 'vacation', 'interesting places', 'Leave a comment', 'blog', 'let me know']
-          }
-        ]
+            "id": "m6",
+            "title": "ม.6",
+            "subtitle": "Muang Kao & Khao Tom Mat",
+            "description": "บทอ่านใหม่เรื่องอาหารท้องถิ่นและภูมิปัญญา",
+            "paragraphs": [
+                  {
+                        "id": "m6-p1",
+                        "title": "Paragraph 1",
+                        "unit": "ม.6 Unit 1",
+                        "activityCode": "Pronunciation Practice - ม.6 - Paragraph 1",
+                        "description": "Tourists in Muang Kao and the local dessert Khao Tom Mat.",
+                        "chunks": [
+                              {
+                                    "text": "Many tourists visit Muang Kao for its beautiful ancient temples. After a long walk, they love to try local foods like Stir-fried Noodles or Fried Pork with Garlic.",
+                                    "scoreText": "Many tourists visit Muang Kao for its beautiful ancient temples. After a long walk, they love to try local foods like Stir fried Noodles or Fried Pork with Garlic.",
+                                    "stress": [
+                                          "tourists",
+                                          "Muang Kao",
+                                          "ancient temples",
+                                          "long walk",
+                                          "local foods",
+                                          "Stir-fried Noodles",
+                                          "Fried Pork with Garlic"
+                                    ]
+                              },
+                              {
+                                    "text": "But there is a special traditional dessert you must try: Khao Tom Mat. It represents our rich local wisdom.",
+                                    "stress": [
+                                          "special",
+                                          "traditional dessert",
+                                          "Khao Tom Mat",
+                                          "represents",
+                                          "rich local wisdom"
+                                    ]
+                              }
+                        ]
+                  },
+                  {
+                        "id": "m6-p2",
+                        "title": "Paragraph 2",
+                        "unit": "ม.6 Unit 1",
+                        "activityCode": "Pronunciation Practice - ม.6 - Paragraph 2",
+                        "description": "How to make Khao Tom Mat step by step.",
+                        "chunks": [
+                              {
+                                    "text": "Making Khao Tom Mat is simple but delicious. Do you want to know how to make it? First, wash the sticky rice carefully. Next, mix the sticky rice with sweet coconut milk and a little salt in a big bowl.",
+                                    "stress": [
+                                          "Making",
+                                          "Khao Tom Mat",
+                                          "simple",
+                                          "delicious",
+                                          "First",
+                                          "sticky rice",
+                                          "carefully",
+                                          "Next",
+                                          "sweet coconut milk",
+                                          "little salt",
+                                          "big bowl"
+                                    ]
+                              },
+                              {
+                                    "text": "Then, put the sweet mixture on a fresh banana leaf and wrap it tightly. After that, boil the wrapped dessert in a big pot of hot water for about 20 minutes.",
+                                    "scoreText": "Then, put the sweet mixture on a fresh banana leaf and wrap it tightly. After that, boil the wrapped dessert in a big pot of hot water for about twenty minutes.",
+                                    "stress": [
+                                          "Then",
+                                          "sweet mixture",
+                                          "fresh banana leaf",
+                                          "wrap it tightly",
+                                          "After that",
+                                          "boil",
+                                          "wrapped dessert",
+                                          "big pot",
+                                          "hot water",
+                                          "20 minutes"
+                                    ]
+                              },
+                              {
+                                    "text": "Finally, open the banana leaf and eat it with sugar and fresh coconut. It is the perfect sweet treat for everyone!",
+                                    "stress": [
+                                          "Finally",
+                                          "banana leaf",
+                                          "sugar",
+                                          "fresh coconut",
+                                          "perfect sweet treat",
+                                          "everyone"
+                                    ]
+                              }
+                        ]
+                  }
+            ]
       }
-    ];
+];
 
+    let rp_currentGrade = null;
     let rp_currentParagraph = null;
     let rp_chunks = [];
     let rp_currentIndex = 0;
     let rp_isRecording = false;
     let rp_recognition = null;
     let rp_scores = [];
+    let rp_finishedAt = null;
 
     const RP_PARENT_SAVE_TYPE = 'RP_SAVE_SCORE';
     const RP_PARENT_RESULT_TYPE = 'RP_SAVE_RESULT';
@@ -504,9 +759,7 @@
       return html;
     }
 
-    function rp_getChunk() {
-      return rp_chunks[rp_currentIndex] || { text: '', stress: [] };
-    }
+    function rp_getChunk() { return rp_chunks[rp_currentIndex] || { text: '', stress: [] }; }
 
     function rp_showWarning(message) {
       const box = document.getElementById('rp_warning_box');
@@ -520,6 +773,13 @@
       box.innerHTML = message;
     }
 
+    function rp_setEndMessage(message, color) {
+      const endBox = document.getElementById('rp_end_msg');
+      if (!endBox) return;
+      endBox.innerText = message || '';
+      endBox.style.color = color || '#475569';
+    }
+
     function rp_resetMicButton(label) {
       rp_isRecording = false;
       const btn = document.getElementById('rp_btn_mic');
@@ -529,18 +789,14 @@
       btn.innerHTML = label || '🎤 กดเพื่ออ่านอีกครั้ง';
     }
 
-    function rp_getSpeechRecognitionCtor() {
-      return window.SpeechRecognition || window.webkitSpeechRecognition || null;
-    }
+    function rp_getSpeechRecognitionCtor() { return window.SpeechRecognition || window.webkitSpeechRecognition || null; }
 
     function rp_initSpeech() {
       const SpeechRecognition = rp_getSpeechRecognitionCtor();
-
       if (!SpeechRecognition) {
         rp_showWarning('⚠️ เบราว์เซอร์นี้ยังไม่รองรับ Speech Recognition แนะนำให้เปิดด้วย Google Chrome เวอร์ชันล่าสุด');
         return false;
       }
-
       if (rp_recognition) return true;
 
       rp_recognition = new SpeechRecognition();
@@ -555,15 +811,11 @@
         rp_resetMicButton();
       };
 
-      rp_recognition.onend = function() {
-        rp_resetMicButton();
-      };
+      rp_recognition.onend = function() { rp_resetMicButton(); };
 
       rp_recognition.onerror = function(event) {
         console.error('Speech error:', event.error);
-
         let message = '⚠️ ระบบฟังเสียงมีปัญหา กรุณาลองใหม่อีกครั้ง';
-
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
           message = '⚠️ เบราว์เซอร์ไม่อนุญาตให้ใช้ไมโครโฟน ตรวจสอบว่าเปิดผ่าน HTTPS, กด Allow ไมค์แล้ว และถ้าฝังผ่าน iframe ต้องใส่ <code>allow="microphone"</code>';
         } else if (event.error === 'no-speech') {
@@ -573,52 +825,56 @@
         } else if (event.error === 'network') {
           message = '⚠️ ระบบตรวจเสียงต้องใช้อินเทอร์เน็ต กรุณาตรวจสอบการเชื่อมต่อ';
         }
-
         rp_showWarning(message);
         rp_resetMicButton();
       };
-
       return true;
     }
 
     async function rp_ensureMicPermission() {
       if (!window.isSecureContext) {
-        return {
-          ok: false,
-          message: '⚠️ หน้านี้ไม่ได้เปิดผ่าน HTTPS เบราว์เซอร์จึงไม่อนุญาตให้ใช้ไมโครโฟน กรุณาโฮสต์บน GitHub Pages / Vercel / Netlify แล้วเปิดลิงก์ HTTPS'
-        };
+        return { ok: false, message: '⚠️ หน้านี้ไม่ได้เปิดผ่าน HTTPS เบราว์เซอร์จึงไม่อนุญาตให้ใช้ไมโครโฟน กรุณาโฮสต์บน GitHub Pages / Vercel / Netlify แล้วเปิดลิงก์ HTTPS' };
       }
-
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        return {
-          ok: false,
-          message: '⚠️ เบราว์เซอร์นี้ไม่รองรับการขอสิทธิ์ไมโครโฟน กรุณาใช้ Google Chrome เวอร์ชันล่าสุด'
-        };
+        return { ok: false, message: '⚠️ เบราว์เซอร์นี้ไม่รองรับการขอสิทธิ์ไมโครโฟน กรุณาใช้ Google Chrome เวอร์ชันล่าสุด' };
       }
-
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach(track => track.stop());
         return { ok: true };
       } catch (err) {
         console.error('Microphone permission error:', err);
-        return {
-          ok: false,
-          message: '⚠️ ไม่สามารถใช้ไมโครโฟนได้: กรุณากด Allow / อนุญาตไมค์ในเบราว์เซอร์ หรือเช็กว่า iframe มี <code>allow="microphone"</code>'
-        };
+        return { ok: false, message: '⚠️ ไม่สามารถใช้ไมโครโฟนได้: กรุณากด Allow / อนุญาตไมค์ในเบราว์เซอร์ หรือเช็กว่า iframe มี <code>allow="microphone"</code>' };
       }
+    }
+
+    function rp_renderGradeSelector() {
+      const grid = document.getElementById('rp_grade_grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      rp_gradeSets.forEach(function(grade) {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'rp_grade_card';
+        card.onclick = function() { window.rp_selectGrade(grade.id); };
+        card.innerHTML =
+          '<div class="rp_grade_big">' + rp_escapeHtml(grade.title) + '</div>' +
+          '<div class="rp_card_title">' + rp_escapeHtml(grade.subtitle || '') + '</div>' +
+          '<div class="rp_card_meta">' + grade.paragraphs.length + ' Paragraph • ' + rp_escapeHtml(grade.description || '') + '</div>';
+        grid.appendChild(card);
+      });
     }
 
     function rp_renderParagraphSelector() {
       const grid = document.getElementById('rp_paragraph_grid');
-      if (!grid) return;
+      if (!grid || !rp_currentGrade) return;
       grid.innerHTML = '';
+      document.getElementById('rp_selected_grade_label').innerText = rp_currentGrade.title;
 
-      rp_paragraphSets.forEach(function(paragraph, index) {
+      rp_currentGrade.paragraphs.forEach(function(paragraph) {
         const totalParts = paragraph.chunks.length;
         const firstText = paragraph.chunks[0]?.text || '';
-        const preview = firstText.length > 140 ? firstText.slice(0, 140) + '...' : firstText;
-
+        const preview = firstText.length > 150 ? firstText.slice(0, 150) + '...' : firstText;
         const card = document.createElement('button');
         card.type = 'button';
         card.className = 'rp_paragraph_card';
@@ -633,13 +889,8 @@
 
     function rp_stopAllMedia() {
       if (window.speechSynthesis) window.speechSynthesis.cancel();
-
       if (rp_recognition && rp_isRecording) {
-        try {
-          rp_recognition.stop();
-        } catch (e) {
-          console.error(e);
-        }
+        try { rp_recognition.stop(); } catch (e) { console.error(e); }
       }
       rp_isRecording = false;
     }
@@ -647,7 +898,7 @@
     function rp_loadChunk() {
       const chunk = rp_getChunk();
       const nextBtn = document.getElementById('rp_next_btn');
-
+      document.getElementById('rp_selected_grade_read_label').innerText = rp_currentGrade?.title || 'ระดับชั้น';
       document.getElementById('rp_selected_paragraph_label').innerText = rp_currentParagraph?.title || 'Paragraph';
       document.getElementById('rp_current_idx').innerText = rp_currentIndex + 1;
       document.getElementById('rp_total_idx').innerText = rp_chunks.length;
@@ -655,36 +906,64 @@
       document.getElementById('rp_feedback_box').style.display = 'none';
       document.getElementById('rp_transcript_display').style.display = 'none';
       document.getElementById('rp_transcript_display').innerHTML = '';
-
-      if (nextBtn) {
-        nextBtn.innerHTML = rp_currentIndex < rp_chunks.length - 1 ? 'ข้อถัดไป ➡️' : 'ดูคะแนนสรุป ✅';
-      }
-
+      if (nextBtn) nextBtn.innerHTML = rp_currentIndex < rp_chunks.length - 1 ? 'ข้อถัดไป ➡️' : 'ดูคะแนนสรุป ✅';
       rp_showWarning('');
       rp_resetMicButton('🎤 เริ่มอ่าน');
     }
 
-    window.rp_selectParagraph = function(paragraphId) {
-      const paragraph = rp_paragraphSets.find(item => item.id === paragraphId) || rp_paragraphSets[0];
+    window.rp_selectGrade = function(gradeId) {
+      const grade = rp_gradeSets.find(item => item.id === gradeId) || rp_gradeSets[0];
       rp_stopAllMedia();
-
-      rp_currentParagraph = paragraph;
-      rp_chunks = paragraph.chunks;
-      rp_currentIndex = 0;
-      rp_scores = [];
-
-      document.getElementById('rp_select_screen').style.display = 'none';
-      document.getElementById('rp_final_screen').style.display = 'none';
-      document.getElementById('rp_main_screen').style.display = 'block';
-      rp_loadChunk();
-    };
-
-    window.rp_goToSelect = function() {
-      rp_stopAllMedia();
+      rp_currentGrade = grade;
       rp_currentParagraph = null;
       rp_chunks = [];
       rp_currentIndex = 0;
       rp_scores = [];
+      document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_select_screen').style.display = 'block';
+      rp_renderParagraphSelector();
+    };
+
+    window.rp_selectParagraph = function(paragraphId) {
+      if (!rp_currentGrade) { window.rp_goToGradeSelect(); return; }
+      const paragraph = rp_currentGrade.paragraphs.find(item => item.id === paragraphId) || rp_currentGrade.paragraphs[0];
+      rp_stopAllMedia();
+      rp_currentParagraph = paragraph;
+      rp_chunks = paragraph.chunks;
+      rp_currentIndex = 0;
+      rp_scores = [];
+      rp_finishedAt = null;
+      document.getElementById('rp_select_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'block';
+      rp_loadChunk();
+    };
+
+    window.rp_goToGradeSelect = function() {
+      rp_stopAllMedia();
+      rp_currentGrade = null;
+      rp_currentParagraph = null;
+      rp_chunks = [];
+      rp_currentIndex = 0;
+      rp_scores = [];
+      document.getElementById('rp_select_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_grade_screen').style.display = 'block';
+      rp_renderGradeSelector();
+    };
+
+    window.rp_goToParagraphSelect = function() {
+      rp_stopAllMedia();
+      if (!rp_currentGrade) { window.rp_goToGradeSelect(); return; }
+      rp_currentParagraph = null;
+      rp_chunks = [];
+      rp_currentIndex = 0;
+      rp_scores = [];
+      document.getElementById('rp_grade_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'none';
       document.getElementById('rp_final_screen').style.display = 'none';
       document.getElementById('rp_select_screen').style.display = 'block';
@@ -697,7 +976,7 @@
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(chunk.text);
         utterance.lang = 'en-US';
-        utterance.rate = 0.85;
+        utterance.rate = 0.68; // เดิม 0.85 — ปรับให้ช้าลง 20%
         window.speechSynthesis.speak(utterance);
       } else {
         rp_showWarning('⚠️ เบราว์เซอร์นี้ไม่รองรับระบบอ่านข้อความอัตโนมัติ');
@@ -706,38 +985,27 @@
 
     window.rp_toggleRecord = async function() {
       if (!rp_initSpeech()) return;
-
       if (rp_isRecording) {
-        try {
-          rp_recognition.stop();
-        } catch (e) {
-          console.error(e);
-        }
+        try { rp_recognition.stop(); } catch (e) { console.error(e); }
         rp_resetMicButton();
         return;
       }
-
       const btn = document.getElementById('rp_btn_mic');
       btn.disabled = true;
       btn.innerHTML = '⏳ กำลังขอสิทธิ์ไมค์...';
-
       const permission = await rp_ensureMicPermission();
       if (!permission.ok) {
         rp_showWarning(permission.message);
         rp_resetMicButton('🎤 เริ่มอ่าน');
         return;
       }
-
       window.speechSynthesis.cancel();
-
       try {
         rp_showWarning('');
         document.getElementById('rp_feedback_box').style.display = 'none';
         document.getElementById('rp_transcript_display').style.display = 'none';
-
         rp_recognition.start();
         rp_isRecording = true;
-
         btn.disabled = false;
         btn.classList.add('recording');
         btn.innerHTML = '⏹️ กดเพื่อหยุดฟัง';
@@ -760,18 +1028,14 @@
 
     function rp_evaluatePronunciation(transcript) {
       if (!transcript) return;
-
       const chunk = rp_getChunk();
       const scoreSourceText = chunk.scoreText || chunk.text;
       const originalText = rp_cleanString(scoreSourceText);
       const spokenText = rp_cleanString(transcript);
-
       const originalWords = originalText.split(' ').filter(Boolean);
       const spokenWords = spokenText.split(' ').filter(Boolean);
-
       let correctCount = 0;
       let resultHtml = '';
-
       originalWords.forEach(function(word) {
         if (spokenWords.includes(word)) {
           correctCount++;
@@ -780,64 +1044,205 @@
           resultHtml += '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
         }
       });
-
       const percentage = originalWords.length ? Math.min(100, Math.round((correctCount / originalWords.length) * 100)) : 0;
-
       const transcriptBox = document.getElementById('rp_transcript_display');
       transcriptBox.style.display = 'block';
       transcriptBox.innerHTML = rp_escapeHtml(transcript);
-
       document.getElementById('rp_result_display').innerHTML = resultHtml;
       document.getElementById('rp_score_text').innerText = percentage;
       document.getElementById('rp_feedback_box').style.display = 'block';
-
       rp_scores[rp_currentIndex] = percentage;
+    }
+
+    function rp_formatDateTime(date) {
+      try {
+        return new Intl.DateTimeFormat('th-TH', {
+          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        }).format(date || new Date());
+      } catch (e) {
+        return (date || new Date()).toLocaleString();
+      }
+    }
+
+    function rp_updateFinalMeta(avg) {
+      rp_finishedAt = new Date();
+      document.getElementById('rp_final_grade_name').innerText = rp_currentGrade?.title || 'ระดับชั้น';
+      document.getElementById('rp_final_paragraph_name').innerText = rp_currentParagraph?.title || 'Paragraph';
+      document.getElementById('rp_result_grade').innerText = rp_currentGrade?.title || 'ระดับชั้น';
+      document.getElementById('rp_result_paragraph').innerText = rp_currentParagraph?.title || 'Paragraph';
+      document.getElementById('rp_result_parts').innerText = rp_chunks.length;
+      document.getElementById('rp_result_date').innerText = rp_formatDateTime(rp_finishedAt);
+      document.getElementById('rp_final_score').innerText = avg;
+      document.getElementById('rp_student_name').value = '';
+      document.getElementById('rp_student_number').value = '';
     }
 
     window.rp_nextChunk = function() {
       rp_stopAllMedia();
       rp_resetMicButton();
-
       if (rp_currentIndex < rp_chunks.length - 1) {
         rp_currentIndex++;
         rp_loadChunk();
       } else {
         document.getElementById('rp_main_screen').style.display = 'none';
         document.getElementById('rp_final_screen').style.display = 'block';
-        document.getElementById('rp_final_paragraph_name').innerText = rp_currentParagraph?.title || 'Paragraph';
-
         const validScores = rp_scores.filter(score => typeof score === 'number');
         const total = validScores.reduce((sum, score) => sum + score, 0);
         const avg = Math.round(total / validScores.length) || 0;
-
-        document.getElementById('rp_final_score').innerText = avg;
+        rp_updateFinalMeta(avg);
         document.getElementById('rp_submit_btn').style.display = 'flex';
         document.getElementById('rp_submit_btn').disabled = false;
         document.getElementById('rp_submit_btn').innerText = '📤 บันทึกคะแนน';
-        document.getElementById('rp_end_msg').innerText = '';
+        rp_setEndMessage('', '#475569');
       }
     };
 
     window.rp_restartSelected = function() {
-      if (!rp_currentParagraph) {
-        window.rp_goToSelect();
-        return;
-      }
-
+      if (!rp_currentParagraph) { window.rp_goToParagraphSelect(); return; }
       rp_stopAllMedia();
       rp_currentIndex = 0;
       rp_scores = [];
+      rp_finishedAt = null;
       rp_resetMicButton('🎤 เริ่มอ่าน');
       document.getElementById('rp_final_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'block';
       rp_loadChunk();
     };
 
+    function rp_roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function rp_drawCenteredText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = String(text || '').split(' ');
+      let line = '';
+      const lines = [];
+      words.forEach(function(word) {
+        const test = line ? line + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      });
+      if (line) lines.push(line);
+      lines.forEach(function(l, idx) { ctx.fillText(l, x, y + idx * lineHeight); });
+      return y + lines.length * lineHeight;
+    }
+
+    window.rp_downloadResultImage = async function() {
+      const name = document.getElementById('rp_student_name').value.trim();
+      const number = document.getElementById('rp_student_number').value.trim();
+      if (!name || !number) {
+        rp_setEndMessage('⚠️ กรุณากรอกชื่อ-นามสกุล และเลขที่ ก่อนดาวน์โหลดภาพผลคะแนน', '#ef4444');
+        return;
+      }
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) { console.error(e); }
+      }
+
+      const score = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
+      const grade = rp_currentGrade?.title || 'ระดับชั้น';
+      const paragraph = rp_currentParagraph?.title || 'Paragraph';
+      const parts = rp_chunks.length || 0;
+      const dateText = document.getElementById('rp_result_date').innerText || rp_formatDateTime(new Date());
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200;
+      canvas.height = 1600;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#eef2ff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      rp_roundRect(ctx, 90, 90, 1020, 1420, 44);
+      ctx.fill();
+
+      ctx.fillStyle = '#4f46e5';
+      rp_roundRect(ctx, 90, 90, 1020, 190, 44);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.font = '700 52px Kanit, Arial, sans-serif';
+      ctx.fillText('Reading & Pronunciation', 600, 175);
+      ctx.font = '500 32px Kanit, Arial, sans-serif';
+      ctx.fillText('ผลคะแนนการอ่านออกเสียง', 600, 225);
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = '700 54px Kanit, Arial, sans-serif';
+      ctx.fillText('🎉 เยี่ยมมาก!', 600, 360);
+
+      ctx.fillStyle = '#475569';
+      ctx.font = '500 34px Kanit, Arial, sans-serif';
+      ctx.fillText('คะแนนเฉลี่ย', 600, 440);
+      ctx.fillStyle = '#4f46e5';
+      ctx.font = '800 150px Kanit, Arial, sans-serif';
+      ctx.fillText(score + '%', 600, 590);
+
+      const rows = [
+        ['ชื่อ - นามสกุล', name],
+        ['เลขที่', number],
+        ['ระดับชั้น', grade],
+        ['บทอ่าน', paragraph],
+        ['จำนวนช่วงอ่าน', parts + ' ช่วง'],
+        ['วันที่ทำแบบฝึก', dateText]
+      ];
+
+      let y = 705;
+      rows.forEach(function(row) {
+        ctx.fillStyle = '#f8fafc';
+        rp_roundRect(ctx, 180, y - 48, 840, 78, 18);
+        ctx.fill();
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'left';
+        ctx.font = '600 27px Kanit, Arial, sans-serif';
+        ctx.fillText(row[0], 220, y);
+        ctx.fillStyle = '#1e293b';
+        ctx.textAlign = 'right';
+        ctx.font = '700 31px Kanit, Arial, sans-serif';
+        let value = String(row[1] || '-');
+        if (ctx.measureText(value).width > 510) {
+          while (value.length > 0 && ctx.measureText(value + '…').width > 510) value = value.slice(0, -1);
+          value += '…';
+        }
+        ctx.fillText(value, 980, y);
+        y += 94;
+      });
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '500 25px Kanit, Arial, sans-serif';
+      ctx.fillText('Generated by Reading & Pronunciation Practice', 600, 1405);
+      ctx.fillText('บันทึกภาพนี้ไว้เป็นหลักฐานการทำแบบฝึก', 600, 1450);
+
+      const safeName = (name || 'student').replace(/[^\u0E00-\u0E7Fa-zA-Z0-9_-]+/g, '_').slice(0, 50);
+      const safeGrade = (grade || 'grade').replace(/[^\u0E00-\u0E7Fa-zA-Z0-9_-]+/g, '_');
+      const safeParagraph = (paragraph || 'paragraph').replace(/[^\u0E00-\u0E7Fa-zA-Z0-9_-]+/g, '_');
+      const link = document.createElement('a');
+      link.download = 'pronunciation_score_' + safeGrade + '_' + safeParagraph + '_no' + number + '_' + safeName + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      rp_setEndMessage('✅ ดาวน์โหลดภาพผลคะแนนเรียบร้อยแล้ว', '#10b981');
+    };
+
     window.rp_submitMyScore = function() {
       const avgScore = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
-      const endBox = document.getElementById('rp_end_msg');
       const btn = document.getElementById('rp_submit_btn');
       const paragraph = rp_currentParagraph || { title: 'Paragraph', unit: 'Unit 1', activityCode: 'Pronunciation Practice' };
+      const grade = rp_currentGrade || { title: 'ระดับชั้น' };
+      const studentName = document.getElementById('rp_student_name').value.trim();
+      const studentNumber = document.getElementById('rp_student_number').value.trim();
 
       if (btn) {
         btn.innerText = '⏳ กำลังส่งคะแนน...';
@@ -848,70 +1253,48 @@
         window.parent.postMessage({
           type: RP_PARENT_SAVE_TYPE,
           payload: {
-            activityCode: paragraph.activityCode || ('Pronunciation Practice - ' + paragraph.title),
-            unit: paragraph.unit || 'Unit 1',
+            activityCode: paragraph.activityCode || ('Pronunciation Practice - ' + grade.title + ' - ' + paragraph.title),
+            unit: paragraph.unit || (grade.title + ' Unit 1'),
             activityType: 'กิจกรรมย่อย',
             avgScore: avgScore,
+            gradeId: grade.id,
+            gradeTitle: grade.title,
             paragraphId: paragraph.id,
             paragraphTitle: paragraph.title,
-            totalParts: rp_chunks.length
+            totalParts: rp_chunks.length,
+            studentName: studentName,
+            studentNumber: studentNumber
           }
         }, '*');
-
-        if (endBox) {
-          endBox.innerText = '⏳ ส่งคะแนนกลับไปยังระบบ LMS แล้ว กำลังรอผลบันทึก...';
-          endBox.style.color = '#4f46e5';
-        }
-
+        rp_setEndMessage('⏳ ส่งคะแนนกลับไปยังระบบ LMS แล้ว กำลังรอผลบันทึก...', '#4f46e5');
         setTimeout(function() {
           if (btn && btn.disabled) {
             btn.disabled = false;
             btn.innerText = '📤 ส่งคะแนนอีกครั้ง';
           }
         }, 8000);
-
         return;
       }
 
-      if (endBox) {
-        endBox.innerText = '⚠️ โหมดทดสอบนอก LMS: ตรวจเสียงได้แล้ว แต่ยังไม่ได้เชื่อมกับระบบบันทึกคะแนน';
-        endBox.style.color = '#ef4444';
-      }
-
-      if (btn) {
-        btn.disabled = false;
-        btn.innerText = '📤 บันทึกคะแนน';
-      }
+      rp_setEndMessage('⚠️ โหมดทดสอบนอก LMS: ตรวจเสียงได้แล้ว แต่ยังไม่ได้เชื่อมกับระบบบันทึกคะแนน', '#ef4444');
+      if (btn) { btn.disabled = false; btn.innerText = '📤 บันทึกคะแนน'; }
     };
 
     window.addEventListener('message', function(event) {
       const data = event.data || {};
       if (data.type !== RP_PARENT_RESULT_TYPE) return;
-
-      const endBox = document.getElementById('rp_end_msg');
       const btn = document.getElementById('rp_submit_btn');
-
       if (data.ok) {
         if (btn) btn.style.display = 'none';
-        if (endBox) {
-          endBox.innerText = data.message || '✅ บันทึกคะแนนสำเร็จ! ตรวจสอบได้ที่ My Folio';
-          endBox.style.color = '#10b981';
-        }
+        rp_setEndMessage(data.message || '✅ บันทึกคะแนนสำเร็จ! ตรวจสอบได้ที่ My Folio', '#10b981');
       } else {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = '📤 ส่งคะแนนอีกครั้ง';
-        }
-        if (endBox) {
-          endBox.innerText = data.message || '⚠️ บันทึกคะแนนไม่สำเร็จ กรุณาลองใหม่';
-          endBox.style.color = '#ef4444';
-        }
+        if (btn) { btn.disabled = false; btn.innerText = '📤 ส่งคะแนนอีกครั้ง'; }
+        rp_setEndMessage(data.message || '⚠️ บันทึกคะแนนไม่สำเร็จ กรุณาลองใหม่', '#ef4444');
       }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      rp_renderParagraphSelector();
-
+      rp_renderGradeSelector();
       if (!window.isSecureContext) {
         rp_showWarning('⚠️ หมายเหตุ: ระบบตรวจเสียงต้องเปิดผ่าน HTTPS เท่านั้น ถ้าเปิดจากไฟล์ในเครื่องหรือ HTTP ไมค์อาจใช้ไม่ได้');
       }
