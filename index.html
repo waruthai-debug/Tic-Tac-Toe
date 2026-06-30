@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reading & Pronunciation Practice - Grade Select</title>
+  <title>Reading & Pronunciation Practice - Grade & Difficulty Select</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -128,6 +128,7 @@
     .rp_result_text { font-size: 1.05rem; line-height: 1.65; margin-bottom: 10px; }
     .rp_correct_word { color: #15803d; font-weight: 600; }
     .rp_wrong_word { color: #dc2626; text-decoration: line-through; }
+    .rp_ignored_word { color: #94a3b8; font-weight: 500; }
 
     .rp_score_box {
       text-align: center;
@@ -143,6 +144,12 @@
       gap: 14px;
     }
 
+    .rp_difficulty_grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
     .rp_paragraph_grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -150,6 +157,7 @@
     }
 
     .rp_grade_card,
+    .rp_difficulty_card,
     .rp_paragraph_card {
       border: 1px solid #e2e8f0;
       background: #ffffff;
@@ -170,6 +178,7 @@
     }
 
     .rp_grade_card:hover,
+    .rp_difficulty_card:hover,
     .rp_paragraph_card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
@@ -177,6 +186,8 @@
     }
 
     .rp_grade_big { font-size: 2.1rem; font-weight: 800; color: #4f46e5; margin-bottom: 4px; }
+    .rp_difficulty_big { font-size: 1.45rem; font-weight: 800; color: #4f46e5; margin-bottom: 6px; }
+    .rp_difficulty_bonus { display:inline-block; margin-top:8px; padding:5px 9px; border-radius:999px; background:#ecfdf5; color:#047857; font-size:0.82rem; font-weight:800; }
     .rp_card_title { font-size: 1.05rem; font-weight: 700; color: #4f46e5; margin-bottom: 6px; }
     .rp_card_meta { font-size: 0.86rem; color: #64748b; margin-bottom: 8px; font-weight: 500; }
     .rp_card_preview { color: #334155; font-size: 0.92rem; line-height: 1.6; }
@@ -242,6 +253,24 @@
     .rp_meta_label { font-size: 0.78rem; color: #64748b; font-weight: 600; }
     .rp_meta_value { font-size: 1rem; color: #3730a3; font-weight: 700; }
 
+    .rp_score_breakdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .rp_score_step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .rp_score_step_label { color: #64748b; font-size: 0.78rem; font-weight: 700; margin-bottom: 5px; }
+    .rp_score_step_value { color: #4f46e5; font-size: 1.35rem; font-weight: 800; }
+
     .rp_student_form {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -280,6 +309,7 @@
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
+    #rp_difficulty_screen,
     #rp_select_screen,
     #rp_main_screen,
     #rp_final_screen { display: none; }
@@ -290,7 +320,9 @@
       .rp_text_display { font-size: 1.05rem; }
       .rp_btn { width: 100%; justify-content: center; }
       .rp_grade_grid,
+      .rp_difficulty_grid,
       .rp_result_meta,
+      .rp_score_breakdown,
       .rp_student_form { grid-template-columns: 1fr; }
     }
   </style>
@@ -304,23 +336,40 @@
 
     <div class="rp_content" id="rp_grade_screen">
       <div class="rp_instruction">
-        <strong>เลือกระดับชั้นที่ต้องการสอบ:</strong> หลังจากเลือกระดับชั้นแล้ว ระบบจะแสดง Paragraph ของระดับชั้นนั้นให้เลือกฝึกอ่านครับ
+        <strong>เลือกระดับชั้นที่ต้องการสอบ:</strong> หลังจากเลือกระดับชั้นแล้ว ระบบจะให้เลือกระดับการตรวจคะแนนและ Paragraph ที่ต้องการฝึกอ่านครับ
       </div>
       <div class="rp_grade_grid" id="rp_grade_grid"></div>
     </div>
 
-    <div class="rp_content" id="rp_select_screen">
+    <div class="rp_content" id="rp_difficulty_screen">
       <div class="rp_topbar">
         <div>
-          <span class="rp_pill" id="rp_selected_grade_label">ม.5</span>
-          <span class="rp_progress_text">เลือก Paragraph ที่ต้องการสอบ</span>
+          <span class="rp_pill" id="rp_difficulty_grade_label">ม.5</span>
+          <span class="rp_progress_text">เลือกระดับการตรวจคะแนน</span>
         </div>
         <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToGradeSelect()" style="padding: 8px 14px; font-size: 0.9rem;">
           ← เลือกระดับชั้น
         </button>
       </div>
       <div class="rp_instruction">
-        ระบบจะแบ่ง Paragraph ที่เลือกเป็นช่วงอ่านขนาดใกล้เคียงกัน โดยให้จบความในแต่ละช่วง แล้วคิดคะแนนเฉลี่ยเฉพาะ Paragraph นั้นครับ
+        <strong>เลือกระดับให้เหมาะกับตนเอง:</strong> ระดับง่ายจะตรวจผ่อนปรนกว่า ระดับยากจะตรวจเข้มกว่าและมีโบนัสคะแนนเพิ่มในหน้าสรุป
+      </div>
+      <div class="rp_difficulty_grid" id="rp_difficulty_grid"></div>
+    </div>
+
+    <div class="rp_content" id="rp_select_screen">
+      <div class="rp_topbar">
+        <div>
+          <span class="rp_pill" id="rp_selected_grade_label">ม.5</span>
+          <span class="rp_pill" id="rp_selected_difficulty_label">ระดับง่าย</span>
+          <span class="rp_progress_text">เลือก Paragraph ที่ต้องการสอบ</span>
+        </div>
+        <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToDifficultySelect()" style="padding: 8px 14px; font-size: 0.9rem;">
+          ← เลือกระดับการตรวจ
+        </button>
+      </div>
+      <div class="rp_instruction">
+        ระบบจะแบ่ง Paragraph ที่เลือกเป็นช่วงอ่านขนาดใกล้เคียงกัน แล้วคิดคะแนนเฉลี่ยเฉพาะ Paragraph นั้น จากนั้นแปลงเป็นคะแนนเต็ม 10 ตามเกณฑ์ครูครับ
       </div>
       <div class="rp_paragraph_grid" id="rp_paragraph_grid"></div>
     </div>
@@ -336,6 +385,7 @@
       <div class="rp_topbar">
         <div>
           <span class="rp_pill" id="rp_selected_grade_read_label">ม.5</span>
+          <span class="rp_pill" id="rp_selected_difficulty_read_label">ระดับง่าย</span>
           <span class="rp_pill" id="rp_selected_paragraph_label">Paragraph 1</span>
           <span class="rp_progress_text">ช่วงที่ <span id="rp_current_idx">1</span> / <span id="rp_total_idx">1</span></span>
         </div>
@@ -372,7 +422,29 @@
           คุณฝึกอ่านครบ <span id="rp_final_grade_name">ม.5</span> • <span id="rp_final_paragraph_name">Paragraph</span> แล้ว
         </p>
         <div class="rp_score_box" style="font-size: 2.7rem; margin: 12px 0;">
-          คะแนนเฉลี่ย: <span id="rp_final_score">0</span>%
+          คะแนนสุทธิ: <span id="rp_final_score">0</span>/10
+        </div>
+        <div style="font-size:0.95rem; color:#64748b; font-weight:600; margin-top:-4px;">
+          ความแม่นยำเฉลี่ย <span id="rp_final_percent">0</span>% • ระดับ <span id="rp_final_difficulty_name">ง่าย</span>
+        </div>
+
+        <div class="rp_score_breakdown">
+          <div class="rp_score_step">
+            <div class="rp_score_step_label">เปอร์เซ็นต์</div>
+            <div class="rp_score_step_value"><span id="rp_raw_percent">0</span>%</div>
+          </div>
+          <div class="rp_score_step">
+            <div class="rp_score_step_label">แปลงเต็ม 10</div>
+            <div class="rp_score_step_value"><span id="rp_base_score10">0</span></div>
+          </div>
+          <div class="rp_score_step">
+            <div class="rp_score_step_label">โบนัส</div>
+            <div class="rp_score_step_value">+<span id="rp_bonus_score">0</span></div>
+          </div>
+          <div class="rp_score_step">
+            <div class="rp_score_step_label">คะแนนสุทธิ</div>
+            <div class="rp_score_step_value"><span id="rp_net_score10">0</span>/10</div>
+          </div>
         </div>
 
         <div class="rp_result_meta">
@@ -383,6 +455,10 @@
           <div class="rp_meta_item">
             <div class="rp_meta_label">บทอ่าน</div>
             <div class="rp_meta_value" id="rp_result_paragraph">Paragraph 1</div>
+          </div>
+          <div class="rp_meta_item">
+            <div class="rp_meta_label">ระดับการตรวจ</div>
+            <div class="rp_meta_value" id="rp_result_difficulty">ง่าย</div>
           </div>
           <div class="rp_meta_item">
             <div class="rp_meta_label">จำนวนช่วงอ่าน</div>
@@ -419,6 +495,9 @@
       </button>
       <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToParagraphSelect()" style="margin: 0 auto 10px; width:100%; justify-content:center;">
         📚 เลือก Paragraph อื่น
+      </button>
+      <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToDifficultySelect()" style="margin: 0 auto 10px; width:100%; justify-content:center;">
+        🎚️ เลือกระดับการตรวจใหม่
       </button>
       <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToGradeSelect()" style="margin: 0 auto; width:100%; justify-content:center;">
         🏫 เลือกระดับชั้นอื่น
@@ -719,6 +798,7 @@
 ];
 
     let rp_currentGrade = null;
+    let rp_currentDifficulty = null;
     let rp_currentParagraph = null;
     let rp_chunks = [];
     let rp_currentIndex = 0;
@@ -726,9 +806,46 @@
     let rp_recognition = null;
     let rp_scores = [];
     let rp_finishedAt = null;
+    let rp_finalRawPercent = 0;
+    let rp_finalBaseScore10 = 0;
+    let rp_finalBonusScore = 0;
+    let rp_finalNetScore10 = 0;
 
     const RP_PARENT_SAVE_TYPE = 'RP_SAVE_SCORE';
     const RP_PARENT_RESULT_TYPE = 'RP_SAVE_RESULT';
+
+    const rp_difficultyLevels = [
+      {
+        id: 'easy',
+        title: 'ง่าย',
+        badge: 'ระดับง่าย',
+        bonus: 0,
+        description: 'ตรวจผ่อนปรน เหมาะกับผู้เริ่มฝึกอ่าน ไม่คิดคะแนนคำเชื่อม/คำสั้นบางคำ',
+        method: 'content_words'
+      },
+      {
+        id: 'medium',
+        title: 'ปานกลาง',
+        badge: 'ระดับปานกลาง',
+        bonus: 1,
+        description: 'ตรวจมาตรฐาน เทียบคำส่วนใหญ่ในประโยค เหมาะกับนักเรียนทั่วไป',
+        method: 'word_match'
+      },
+      {
+        id: 'hard',
+        title: 'ยาก',
+        badge: 'ระดับยาก',
+        bonus: 2,
+        description: 'ตรวจเข้มขึ้น ให้ความสำคัญกับลำดับคำและการอ่านครบถ้วน',
+        method: 'sequence_match'
+      }
+    ];
+
+    const rp_easyIgnoredWords = new Set([
+      'a','an','the','to','of','in','on','at','for','with','and','or','but','so','as','by','from',
+      'is','am','are','was','were','be','been','being','it','its','this','that','there','here',
+      'do','does','did','can','could','would','should','will','shall','may','might','must'
+    ]);
 
     function rp_escapeHtml(str) {
       return String(str || '')
@@ -865,11 +982,30 @@
       });
     }
 
+    function rp_renderDifficultySelector() {
+      const grid = document.getElementById('rp_difficulty_grid');
+      if (!grid || !rp_currentGrade) return;
+      grid.innerHTML = '';
+      document.getElementById('rp_difficulty_grade_label').innerText = rp_currentGrade.title;
+      rp_difficultyLevels.forEach(function(level) {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'rp_difficulty_card';
+        card.onclick = function() { window.rp_selectDifficulty(level.id); };
+        card.innerHTML =
+          '<div class="rp_difficulty_big">' + rp_escapeHtml(level.title) + '</div>' +
+          '<div class="rp_card_preview">' + rp_escapeHtml(level.description) + '</div>' +
+          '<span class="rp_difficulty_bonus">โบนัส +' + level.bonus + ' คะแนน</span>';
+        grid.appendChild(card);
+      });
+    }
+
     function rp_renderParagraphSelector() {
       const grid = document.getElementById('rp_paragraph_grid');
       if (!grid || !rp_currentGrade) return;
       grid.innerHTML = '';
       document.getElementById('rp_selected_grade_label').innerText = rp_currentGrade.title;
+      document.getElementById('rp_selected_difficulty_label').innerText = rp_currentDifficulty?.badge || 'ระดับง่าย';
 
       rp_currentGrade.paragraphs.forEach(function(paragraph) {
         const totalParts = paragraph.chunks.length;
@@ -899,6 +1035,7 @@
       const chunk = rp_getChunk();
       const nextBtn = document.getElementById('rp_next_btn');
       document.getElementById('rp_selected_grade_read_label').innerText = rp_currentGrade?.title || 'ระดับชั้น';
+      document.getElementById('rp_selected_difficulty_read_label').innerText = rp_currentDifficulty?.badge || 'ระดับง่าย';
       document.getElementById('rp_selected_paragraph_label').innerText = rp_currentParagraph?.title || 'Paragraph';
       document.getElementById('rp_current_idx').innerText = rp_currentIndex + 1;
       document.getElementById('rp_total_idx').innerText = rp_chunks.length;
@@ -915,11 +1052,29 @@
       const grade = rp_gradeSets.find(item => item.id === gradeId) || rp_gradeSets[0];
       rp_stopAllMedia();
       rp_currentGrade = grade;
+      rp_currentDifficulty = null;
       rp_currentParagraph = null;
       rp_chunks = [];
       rp_currentIndex = 0;
       rp_scores = [];
       document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_select_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_difficulty_screen').style.display = 'block';
+      rp_renderDifficultySelector();
+    };
+
+    window.rp_selectDifficulty = function(levelId) {
+      const level = rp_difficultyLevels.find(item => item.id === levelId) || rp_difficultyLevels[0];
+      rp_stopAllMedia();
+      rp_currentDifficulty = level;
+      rp_currentParagraph = null;
+      rp_chunks = [];
+      rp_currentIndex = 0;
+      rp_scores = [];
+      document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_difficulty_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'none';
       document.getElementById('rp_final_screen').style.display = 'none';
       document.getElementById('rp_select_screen').style.display = 'block';
@@ -928,6 +1083,7 @@
 
     window.rp_selectParagraph = function(paragraphId) {
       if (!rp_currentGrade) { window.rp_goToGradeSelect(); return; }
+      if (!rp_currentDifficulty) { window.rp_goToDifficultySelect(); return; }
       const paragraph = rp_currentGrade.paragraphs.find(item => item.id === paragraphId) || rp_currentGrade.paragraphs[0];
       rp_stopAllMedia();
       rp_currentParagraph = paragraph;
@@ -938,6 +1094,7 @@
       document.getElementById('rp_select_screen').style.display = 'none';
       document.getElementById('rp_final_screen').style.display = 'none';
       document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_difficulty_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'block';
       rp_loadChunk();
     };
@@ -945,10 +1102,12 @@
     window.rp_goToGradeSelect = function() {
       rp_stopAllMedia();
       rp_currentGrade = null;
+      rp_currentDifficulty = null;
       rp_currentParagraph = null;
       rp_chunks = [];
       rp_currentIndex = 0;
       rp_scores = [];
+      document.getElementById('rp_difficulty_screen').style.display = 'none';
       document.getElementById('rp_select_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'none';
       document.getElementById('rp_final_screen').style.display = 'none';
@@ -956,14 +1115,32 @@
       rp_renderGradeSelector();
     };
 
-    window.rp_goToParagraphSelect = function() {
+    window.rp_goToDifficultySelect = function() {
       rp_stopAllMedia();
       if (!rp_currentGrade) { window.rp_goToGradeSelect(); return; }
+      rp_currentDifficulty = null;
       rp_currentParagraph = null;
       rp_chunks = [];
       rp_currentIndex = 0;
       rp_scores = [];
       document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_select_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_difficulty_screen').style.display = 'block';
+      rp_renderDifficultySelector();
+    };
+
+    window.rp_goToParagraphSelect = function() {
+      rp_stopAllMedia();
+      if (!rp_currentGrade) { window.rp_goToGradeSelect(); return; }
+      if (!rp_currentDifficulty) { window.rp_goToDifficultySelect(); return; }
+      rp_currentParagraph = null;
+      rp_chunks = [];
+      rp_currentIndex = 0;
+      rp_scores = [];
+      document.getElementById('rp_grade_screen').style.display = 'none';
+      document.getElementById('rp_difficulty_screen').style.display = 'none';
       document.getElementById('rp_main_screen').style.display = 'none';
       document.getElementById('rp_final_screen').style.display = 'none';
       document.getElementById('rp_select_screen').style.display = 'block';
@@ -1026,6 +1203,121 @@
         .trim();
     }
 
+    function rp_levenshtein(a, b) {
+      a = String(a || '');
+      b = String(b || '');
+      const matrix = Array.from({ length: a.length + 1 }, function(_, i) { return [i]; });
+      for (let j = 1; j <= b.length; j++) matrix[0][j] = j;
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j - 1] + cost
+          );
+        }
+      }
+      return matrix[a.length][b.length];
+    }
+
+    function rp_wordsClose(a, b, threshold) {
+      if (a === b) return true;
+      if (!a || !b || a.length <= 2 || b.length <= 2) return false;
+      const distance = rp_levenshtein(a, b);
+      const similarity = 1 - (distance / Math.max(a.length, b.length));
+      return similarity >= threshold;
+    }
+
+    function rp_wordExistsInSpoken(word, spokenWords, threshold) {
+      return spokenWords.some(function(spoken) { return rp_wordsClose(word, spoken, threshold); });
+    }
+
+    function rp_lcsLength(originalWords, spokenWords, threshold) {
+      const m = originalWords.length;
+      const n = spokenWords.length;
+      const dp = Array.from({ length: m + 1 }, function() { return Array(n + 1).fill(0); });
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (rp_wordsClose(originalWords[i - 1], spokenWords[j - 1], threshold)) {
+            dp[i][j] = dp[i - 1][j - 1] + 1;
+          } else {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+          }
+        }
+      }
+      return dp[m][n];
+    }
+
+    function rp_calculateByDifficulty(originalWords, spokenWords) {
+      const difficulty = rp_currentDifficulty || rp_difficultyLevels[0];
+      const mode = difficulty.method;
+      let correctCount = 0;
+      let countedWords = originalWords;
+      let resultHtml = '';
+
+      if (mode === 'content_words') {
+        countedWords = originalWords.filter(function(word) { return !rp_easyIgnoredWords.has(word); });
+        if (!countedWords.length) countedWords = originalWords;
+        originalWords.forEach(function(word) {
+          if (rp_easyIgnoredWords.has(word) && countedWords !== originalWords) {
+            resultHtml += '<span class="rp_ignored_word" title="ระดับง่าย: ไม่คิดคะแนนคำนี้">' + rp_escapeHtml(word) + '</span> ';
+            return;
+          }
+          const ok = rp_wordExistsInSpoken(word, spokenWords, 0.78);
+          if (ok) correctCount++;
+          resultHtml += ok
+            ? '<span class="rp_correct_word">' + rp_escapeHtml(word) + '</span> '
+            : '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
+        });
+        const percentage = countedWords.length ? Math.min(100, Math.round((correctCount / countedWords.length) * 100)) : 0;
+        return { percentage: percentage, resultHtml: resultHtml };
+      }
+
+      if (mode === 'sequence_match') {
+        correctCount = rp_lcsLength(originalWords, spokenWords, 1);
+        let spokenIndex = 0;
+        originalWords.forEach(function(word) {
+          let foundAt = -1;
+          for (let i = spokenIndex; i < spokenWords.length; i++) {
+            if (word === spokenWords[i]) { foundAt = i; break; }
+          }
+          if (foundAt >= 0) {
+            spokenIndex = foundAt + 1;
+            resultHtml += '<span class="rp_correct_word">' + rp_escapeHtml(word) + '</span> ';
+          } else {
+            resultHtml += '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
+          }
+        });
+        const percentage = originalWords.length ? Math.min(100, Math.round((correctCount / originalWords.length) * 100)) : 0;
+        return { percentage: percentage, resultHtml: resultHtml };
+      }
+
+      originalWords.forEach(function(word) {
+        const ok = spokenWords.includes(word);
+        if (ok) correctCount++;
+        resultHtml += ok
+          ? '<span class="rp_correct_word">' + rp_escapeHtml(word) + '</span> '
+          : '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
+      });
+      const percentage = originalWords.length ? Math.min(100, Math.round((correctCount / originalWords.length) * 100)) : 0;
+      return { percentage: percentage, resultHtml: resultHtml };
+    }
+
+    function rp_roundTeacherScore(percent) {
+      const rawScore = Math.max(0, Math.min(100, Number(percent) || 0)) / 10;
+      const whole = Math.floor(rawScore);
+      const decimal = Number((rawScore - whole).toFixed(2));
+      if (decimal === 0) return Math.min(10, whole);
+      if (decimal <= 0.5) return Math.min(10, whole + 0.5);
+      return Math.min(10, whole + 1);
+    }
+
+    function rp_formatScore10(score) {
+      const value = Number(score) || 0;
+      return Number.isInteger(value) ? String(value) : value.toFixed(1);
+    }
+
     function rp_evaluatePronunciation(transcript) {
       if (!transcript) return;
       const chunk = rp_getChunk();
@@ -1034,24 +1326,14 @@
       const spokenText = rp_cleanString(transcript);
       const originalWords = originalText.split(' ').filter(Boolean);
       const spokenWords = spokenText.split(' ').filter(Boolean);
-      let correctCount = 0;
-      let resultHtml = '';
-      originalWords.forEach(function(word) {
-        if (spokenWords.includes(word)) {
-          correctCount++;
-          resultHtml += '<span class="rp_correct_word">' + rp_escapeHtml(word) + '</span> ';
-        } else {
-          resultHtml += '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
-        }
-      });
-      const percentage = originalWords.length ? Math.min(100, Math.round((correctCount / originalWords.length) * 100)) : 0;
+      const scored = rp_calculateByDifficulty(originalWords, spokenWords);
       const transcriptBox = document.getElementById('rp_transcript_display');
       transcriptBox.style.display = 'block';
       transcriptBox.innerHTML = rp_escapeHtml(transcript);
-      document.getElementById('rp_result_display').innerHTML = resultHtml;
-      document.getElementById('rp_score_text').innerText = percentage;
+      document.getElementById('rp_result_display').innerHTML = scored.resultHtml;
+      document.getElementById('rp_score_text').innerText = scored.percentage;
       document.getElementById('rp_feedback_box').style.display = 'block';
-      rp_scores[rp_currentIndex] = percentage;
+      rp_scores[rp_currentIndex] = scored.percentage;
     }
 
     function rp_formatDateTime(date) {
@@ -1066,13 +1348,25 @@
 
     function rp_updateFinalMeta(avg) {
       rp_finishedAt = new Date();
+      rp_finalRawPercent = Math.max(0, Math.min(100, Number(avg) || 0));
+      rp_finalBaseScore10 = rp_roundTeacherScore(rp_finalRawPercent);
+      rp_finalBonusScore = Number(rp_currentDifficulty?.bonus) || 0;
+      rp_finalNetScore10 = Math.min(10, rp_finalBaseScore10 + rp_finalBonusScore);
+
       document.getElementById('rp_final_grade_name').innerText = rp_currentGrade?.title || 'ระดับชั้น';
       document.getElementById('rp_final_paragraph_name').innerText = rp_currentParagraph?.title || 'Paragraph';
+      document.getElementById('rp_final_difficulty_name').innerText = rp_currentDifficulty?.title || 'ง่าย';
       document.getElementById('rp_result_grade').innerText = rp_currentGrade?.title || 'ระดับชั้น';
       document.getElementById('rp_result_paragraph').innerText = rp_currentParagraph?.title || 'Paragraph';
+      document.getElementById('rp_result_difficulty').innerText = (rp_currentDifficulty?.title || 'ง่าย') + ' (+' + rp_finalBonusScore + ')';
       document.getElementById('rp_result_parts').innerText = rp_chunks.length;
       document.getElementById('rp_result_date').innerText = rp_formatDateTime(rp_finishedAt);
-      document.getElementById('rp_final_score').innerText = avg;
+      document.getElementById('rp_final_percent').innerText = rp_finalRawPercent;
+      document.getElementById('rp_raw_percent').innerText = rp_finalRawPercent;
+      document.getElementById('rp_base_score10').innerText = rp_formatScore10(rp_finalBaseScore10);
+      document.getElementById('rp_bonus_score').innerText = rp_formatScore10(rp_finalBonusScore);
+      document.getElementById('rp_net_score10').innerText = rp_formatScore10(rp_finalNetScore10);
+      document.getElementById('rp_final_score').innerText = rp_formatScore10(rp_finalNetScore10);
       document.getElementById('rp_student_name').value = '';
       document.getElementById('rp_student_number').value = '';
     }
@@ -1152,9 +1446,13 @@
         try { await document.fonts.ready; } catch (e) { console.error(e); }
       }
 
-      const score = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
+      const finalScore = rp_formatScore10(rp_finalNetScore10);
+      const rawPercent = rp_finalRawPercent || 0;
+      const baseScore = rp_formatScore10(rp_finalBaseScore10);
+      const bonusScore = rp_formatScore10(rp_finalBonusScore);
       const grade = rp_currentGrade?.title || 'ระดับชั้น';
       const paragraph = rp_currentParagraph?.title || 'Paragraph';
+      const difficulty = rp_currentDifficulty?.title || 'ง่าย';
       const parts = rp_chunks.length || 0;
       const dateText = document.getElementById('rp_result_date').innerText || rp_formatDateTime(new Date());
 
@@ -1185,16 +1483,20 @@
 
       ctx.fillStyle = '#475569';
       ctx.font = '500 34px Kanit, Arial, sans-serif';
-      ctx.fillText('คะแนนเฉลี่ย', 600, 440);
+      ctx.fillText('คะแนนสุทธิ', 600, 440);
       ctx.fillStyle = '#4f46e5';
-      ctx.font = '800 150px Kanit, Arial, sans-serif';
-      ctx.fillText(score + '%', 600, 590);
+      ctx.font = '800 145px Kanit, Arial, sans-serif';
+      ctx.fillText(finalScore + '/10', 600, 585);
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 30px Kanit, Arial, sans-serif';
+      ctx.fillText('ความแม่นยำ ' + rawPercent + '% • แปลงเต็ม 10 = ' + baseScore + ' • โบนัส +' + bonusScore, 600, 640);
 
       const rows = [
         ['ชื่อ - นามสกุล', name],
         ['เลขที่', number],
         ['ระดับชั้น', grade],
         ['บทอ่าน', paragraph],
+        ['ระดับการตรวจ', difficulty + ' (+' + bonusScore + ')'],
         ['จำนวนช่วงอ่าน', parts + ' ช่วง'],
         ['วันที่ทำแบบฝึก', dateText]
       ];
@@ -1237,10 +1539,11 @@
     };
 
     window.rp_submitMyScore = function() {
-      const avgScore = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
+      const finalScore10 = Number(rp_finalNetScore10) || 0;
       const btn = document.getElementById('rp_submit_btn');
       const paragraph = rp_currentParagraph || { title: 'Paragraph', unit: 'Unit 1', activityCode: 'Pronunciation Practice' };
       const grade = rp_currentGrade || { title: 'ระดับชั้น' };
+      const difficulty = rp_currentDifficulty || { id: 'easy', title: 'ง่าย', bonus: 0 };
       const studentName = document.getElementById('rp_student_name').value.trim();
       const studentNumber = document.getElementById('rp_student_number').value.trim();
 
@@ -1253,12 +1556,18 @@
         window.parent.postMessage({
           type: RP_PARENT_SAVE_TYPE,
           payload: {
-            activityCode: paragraph.activityCode || ('Pronunciation Practice - ' + grade.title + ' - ' + paragraph.title),
+            activityCode: (paragraph.activityCode || ('Pronunciation Practice - ' + grade.title + ' - ' + paragraph.title)) + ' - ' + difficulty.title,
             unit: paragraph.unit || (grade.title + ' Unit 1'),
             activityType: 'กิจกรรมย่อย',
-            avgScore: avgScore,
+            avgScore: finalScore10,
+            finalScore10: finalScore10,
+            rawPercent: rp_finalRawPercent,
+            baseScore10: rp_finalBaseScore10,
+            bonusScore: rp_finalBonusScore,
             gradeId: grade.id,
             gradeTitle: grade.title,
+            difficultyId: difficulty.id,
+            difficultyTitle: difficulty.title,
             paragraphId: paragraph.id,
             paragraphTitle: paragraph.title,
             totalParts: rp_chunks.length,
