@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reading & Pronunciation Practice</title>
+  <title>Reading & Pronunciation Practice - Balanced Paragraph Select</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 
     #rp_app_container {
       font-family: 'Kanit', sans-serif;
-      max-width: 600px;
+      max-width: 680px;
       margin: 0 auto;
       background: #ffffff;
       border-radius: 12px;
@@ -50,6 +50,7 @@
       border-radius: 8px;
       font-size: 0.9rem;
       margin-bottom: 20px;
+      line-height: 1.7;
     }
 
     .rp_warning {
@@ -65,8 +66,8 @@
     }
 
     .rp_text_display {
-      font-size: 1.3rem;
-      line-height: 1.8;
+      font-size: 1.18rem;
+      line-height: 1.85;
       padding: 20px;
       background: #f8fafc;
       border: 2px dashed #cbd5e1;
@@ -102,6 +103,7 @@
       align-items: center;
       gap: 8px;
       touch-action: manipulation;
+      text-decoration: none;
     }
 
     .rp_btn:disabled {
@@ -143,6 +145,15 @@
       background: #059669;
     }
 
+    .rp_btn_secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .rp_btn_secondary:hover {
+      background: #cbd5e1;
+    }
+
     .rp_feedback {
       margin-top: 15px;
       padding: 15px;
@@ -152,8 +163,8 @@
     }
 
     .rp_result_text {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 1.05rem;
+      line-height: 1.65;
       margin-bottom: 10px;
     }
 
@@ -175,15 +186,99 @@
       margin-top: 10px;
     }
 
+    .rp_paragraph_grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .rp_paragraph_card {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .rp_paragraph_card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      border-color: #818cf8;
+    }
+
+    .rp_card_title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 6px;
+    }
+
+    .rp_card_meta {
+      font-size: 0.86rem;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .rp_card_preview {
+      color: #334155;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .rp_topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .rp_progress_text {
+      font-size: 0.9rem;
+      color: #64748b;
+      font-weight: bold;
+    }
+
+    .rp_pill {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4338ca;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .rp_transcript_box {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      color: #475569;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
     @keyframes rp_pulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
       70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
+    #rp_main_screen,
+    #rp_final_screen {
+      display: none;
+    }
+
     #rp_final_screen {
       text-align: center;
-      display: none;
     }
 
     @media (max-width: 520px) {
@@ -193,7 +288,7 @@
       }
 
       .rp_text_display {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
       }
 
       .rp_btn {
@@ -210,6 +305,13 @@
       <h2>🎙️ Reading & Pronunciation</h2>
     </div>
 
+    <div class="rp_content" id="rp_select_screen">
+      <div class="rp_instruction">
+        <strong>เลือก Paragraph ที่ต้องการสอบ:</strong> ระบบจะแบ่ง Paragraph ที่เลือกเป็นช่วงอ่านขนาดใกล้เคียงกัน โดยให้จบความในแต่ละช่วง แล้วคิดคะแนนเฉลี่ยเฉพาะ Paragraph นั้นครับ
+      </div>
+      <div class="rp_paragraph_grid" id="rp_paragraph_grid"></div>
+    </div>
+
     <div class="rp_content" id="rp_main_screen">
       <div class="rp_instruction">
         <strong>คำแนะนำ:</strong> คำที่เป็น <span class="rp_stress">สีแดงหนา</span> คือคำที่ต้องเน้นเสียง (Stress)
@@ -218,8 +320,14 @@
 
       <div class="rp_warning" id="rp_warning_box"></div>
 
-      <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px; font-weight: bold;">
-        Paragraph <span id="rp_current_idx">1</span> / <span id="rp_total_idx">4</span>
+      <div class="rp_topbar">
+        <div>
+          <span class="rp_pill" id="rp_selected_paragraph_label">Paragraph 1</span>
+          <span class="rp_progress_text">ช่วงที่ <span id="rp_current_idx">1</span> / <span id="rp_total_idx">1</span></span>
+        </div>
+        <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToSelect()" style="padding: 8px 14px; font-size: 0.9rem;">
+          ← เลือก Paragraph อื่น
+        </button>
       </div>
 
       <div class="rp_text_display" id="rp_text_box"></div>
@@ -235,45 +343,130 @@
 
       <div class="rp_feedback" id="rp_feedback_box">
         <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px;">สิ่งที่คุณอ่าน (ระบบได้ยิน):</div>
+        <div class="rp_transcript_box" id="rp_transcript_display"></div>
+        <div style="font-size: 0.9rem; color: #64748b; margin: 12px 0 5px;">ผลเทียบคำในโจทย์:</div>
         <div class="rp_result_text" id="rp_result_display"></div>
         <div class="rp_score_box">ความแม่นยำ: <span id="rp_score_text">0</span>%</div>
-        <button class="rp_btn rp_btn_next" type="button" onclick="window.rp_nextChunk()" style="margin-top: 15px;">ข้อถัดไป ➡️</button>
+        <button class="rp_btn rp_btn_next" type="button" onclick="window.rp_nextChunk()" id="rp_next_btn" style="margin-top: 15px;">ข้อถัดไป ➡️</button>
       </div>
     </div>
 
     <div class="rp_content" id="rp_final_screen">
       <h2 style="color: #10b981; font-size: 2rem; margin-bottom: 10px;">🎉 เยี่ยมมาก!</h2>
-      <p style="font-size: 1.2rem; color: #475569;">คุณฝึกอ่านครบทุกประโยคแล้ว</p>
+      <p style="font-size: 1.1rem; color: #475569; margin-top:0;">
+        คุณฝึกอ่านครบ <span id="rp_final_paragraph_name">Paragraph</span> แล้ว
+      </p>
       <div class="rp_score_box" style="font-size: 2.5rem; margin: 20px 0;">
         คะแนนเฉลี่ย: <span id="rp_final_score">0</span>%
       </div>
-      <button class="rp_btn rp_btn_listen" type="button" id="rp_submit_btn" onclick="window.rp_submitMyScore()" style="margin: 0 auto 15px; width:100%; justify-content:center;">📤 บันทึกคะแนน</button>
+      <button class="rp_btn rp_btn_listen" type="button" id="rp_submit_btn" onclick="window.rp_submitMyScore()" style="margin: 0 auto 12px; width:100%; justify-content:center;">
+        📤 บันทึกคะแนน
+      </button>
       <div id="rp_end_msg" style="margin-bottom:15px; font-weight:500; text-align:center;"></div>
 
-      <button class="rp_btn rp_btn_record" type="button" onclick="window.rp_restart()" style="margin: 0 auto; width:100%; justify-content:center; background:#cbd5e1; color:#333;">🔄 ฝึกอ่านอีกครั้ง</button>
+      <button class="rp_btn rp_btn_record" type="button" onclick="window.rp_restartSelected()" style="margin: 0 auto 10px; width:100%; justify-content:center; background:#cbd5e1; color:#333;">
+        🔄 ฝึก Paragraph นี้อีกครั้ง
+      </button>
+      <button class="rp_btn rp_btn_secondary" type="button" onclick="window.rp_goToSelect()" style="margin: 0 auto; width:100%; justify-content:center;">
+        📚 เลือก Paragraph อื่น
+      </button>
     </div>
   </div>
 
   <script>
-    const rp_chunks = [
+    const rp_paragraphSets = [
       {
-        text: "Hi, I'm Sean. I'm from Chicago in the USA. Welcome to my blog! This month I'm traveling around Asia with my parents and my sister, Lizzy.",
-        html: "Hi, I'm <span class='rp_stress'>Sean</span>. I'm from <span class='rp_stress'>Chicago</span> in the <span class='rp_stress'>USA</span>. <span class='rp_stress'>Welcome</span> to my <span class='rp_stress'>blog</span>! This <span class='rp_stress'>month</span> I'm <span class='rp_stress'>traveling</span> around <span class='rp_stress'>Asia</span> with my parents and my sister, Lizzy."
+        id: 'p1',
+        title: 'Paragraph 1',
+        unit: 'Unit 1',
+        activityCode: 'Pronunciation Practice - Paragraph 1',
+        description: 'Sean introduces his blog and describes Hong Kong.',
+        chunks: [
+          {
+            text: "Hi, I'm Sean. I'm from Chicago in the USA. Welcome to my blog! This month I'm traveling around Asia with my parents and my sister, Lizzy.",
+            stress: ['Sean', 'Chicago', 'USA', 'Welcome', 'blog', 'month', 'traveling', 'Asia', 'Lizzy']
+          },
+          {
+            text: "We're visiting Hong Kong today. Hong Kong Island is only about 2.7 square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
+            scoreText: "We're visiting Hong Kong today. Hong Kong Island is only about two point seven square kilometers, but over seven million people live here! It's an incredible city, ancient and modern at the same time.",
+            stress: ['visiting', 'Hong Kong', 'Hong Kong Island', '2.7 square kilometers', 'seven million', 'incredible city', 'ancient', 'modern']
+          },
+          {
+            text: "There are historical buildings next to hi-tech skyscrapers: our hotel is in an old house between two really tall buildings!",
+            scoreText: "There are historical buildings next to high tech skyscrapers: our hotel is in an old house between two really tall buildings!",
+            stress: ['historical buildings', 'hi-tech skyscrapers', 'hotel', 'old house', 'tall buildings']
+          },
+          {
+            text: "There's lots of traffic of course, but the city also has some beautiful parks and nature reserves. That's something most people don't know.",
+            stress: ['traffic', 'beautiful parks', 'nature reserves', "don't know"]
+          }
+        ]
       },
       {
-        text: "We're visiting Hong Kong today. Hong Kong Island is only about 2.7 square kilometers, but over seven million people live here! It's an incredible city.",
-        html: "We're <span class='rp_stress'>visiting</span> Hong Kong <span class='rp_stress'>today</span>. Hong Kong Island is only about 2.7 square kilometers, but over <span class='rp_stress'>seven million</span> people live here! It's an <span class='rp_stress'>incredible</span> city."
+        id: 'p2',
+        title: 'Paragraph 2',
+        unit: 'Unit 1',
+        activityCode: 'Pronunciation Practice - Paragraph 2',
+        description: 'Sean visits the Tea Ware museum and the city center.',
+        chunks: [
+          {
+            text: "Posted at 10:03 a.m. We're visiting the 'Flagstaff House Museum of Tea Ware' right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
+            scoreText: "Posted at ten oh three a m. We're visiting the Flagstaff House Museum of Tea Ware right now. It's my mom's choice really, but it's opposite our hotel so I don't mind.",
+            stress: ['10:03 a.m.', 'Flagstaff House Museum of Tea Ware', 'right now', "mom's choice", 'opposite', "don't mind"]
+          },
+          {
+            text: "There are hundreds of different teapots here and you can try lots of types of tea. It has the world's oldest teapot! I don't often drink tea, but it is a big part of Asian culture.",
+            stress: ['hundreds', 'teapots', 'types of tea', 'oldest teapot', "don't often", 'big part', 'Asian culture']
+          },
+          {
+            text: "Mom loves drinking tea and she's trying them all! Posted at 10:45 a.m. There isn't a subway station near here so at the moment we're walking to the city center...",
+            scoreText: "Mom loves drinking tea and she's trying them all! Posted at ten forty five a m. There isn't a subway station near here so at the moment we're walking to the city center.",
+            stress: ['loves drinking tea', 'trying them all', '10:45 a.m.', "isn't", 'subway station', 'at the moment', 'walking', 'city center']
+          },
+          {
+            text: "Posted at 12:30 p.m. We’re sightseeing in the center at the moment. It’s amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
+            scoreText: "Posted at twelve thirty p m. We're sightseeing in the center at the moment. It's amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
+            stress: ['12:30 p.m.', 'sightseeing', 'center', 'at the moment', 'amazing', 'Hong Kong', 'really small', 'thousand skyscrapers']
+          },
+          {
+            text: "At the moment I’m standing in front of the Bank of China Tower and I’m looking up... It’s 367 meters tall!",
+            scoreText: "At the moment I'm standing in front of the Bank of China Tower and I'm looking up. It's three hundred and sixty seven meters tall!",
+            stress: ['At the moment', 'standing', 'Bank of China Tower', 'looking up', '367 meters tall']
+          }
+        ]
       },
       {
-        text: "We're visiting the Museum of Tea Ware right now. It has the world's oldest teapot! Mom loves drinking tea and she's trying them all!",
-        html: "We're visiting the <span class='rp_stress'>Museum</span> of <span class='rp_stress'>Tea Ware</span> right <span class='rp_stress'>now</span>. It has the world's <span class='rp_stress'>oldest</span> teapot! Mom <span class='rp_stress'>loves</span> drinking tea and she's <span class='rp_stress'>trying</span> them <span class='rp_stress'>all</span>!"
-      },
-      {
-        text: "We’re sightseeing in the center at the moment. It’s amazing because Hong Kong is really small, but it has over a thousand skyscrapers!",
-        html: "We’re <span class='rp_stress'>sightseeing</span> in the center at the <span class='rp_stress'>moment</span>. It’s <span class='rp_stress'>amazing</span> because Hong Kong is really <span class='rp_stress'>small</span>, but it has over a <span class='rp_stress'>thousand</span> skyscrapers!"
+        id: 'p3',
+        title: 'Paragraph 3',
+        unit: 'Unit 1',
+        activityCode: 'Pronunciation Practice - Paragraph 3',
+        description: 'Sean goes up the tower and asks readers to comment.',
+        chunks: [
+          {
+            text: "Posted at 12:35 p.m. We’re going up to the 43rd floor because there’s a famous observation deck with an amazing view.",
+            scoreText: "Posted at twelve thirty five p m. We're going up to the forty third floor because there's a famous observation deck with an amazing view.",
+            stress: ['12:35 p.m.', 'going up', '43rd floor', 'observation deck', 'amazing view']
+          },
+          {
+            text: "There are lots of apartment buildings, shops and offices in this city and it feels like you can see them all from the top of the tower!",
+            stress: ['apartment buildings', 'shops', 'offices', 'top of the tower']
+          },
+          {
+            text: "My sister is hiding behind me because she’s frightened of this view. Posted at 1:15 p.m. We’re feeling hungry and there aren’t any cafeterias here, so we’re going back down now...",
+            scoreText: "My sister is hiding behind me because she's frightened of this view. Posted at one fifteen p m. We're feeling hungry and there aren't any cafeterias here, so we're going back down now.",
+            stress: ['sister', 'hiding', 'frightened', 'view', '1:15 p.m.', 'feeling hungry', "aren't", 'cafeterias', 'going back down']
+          },
+          {
+            text: "42nd floor... 41st floor... 40th floor... Is there a quicker way?! Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
+            scoreText: "forty second floor. forty first floor. fortieth floor. Is there a quicker way? Are you on vacation? Are there any interesting places where you are? Leave a comment on my blog and let me know!",
+            stress: ['42nd floor', '41st floor', '40th floor', 'quicker way', 'vacation', 'interesting places', 'Leave a comment', 'blog', 'let me know']
+          }
+        ]
       }
     ];
 
+    let rp_currentParagraph = null;
+    let rp_chunks = [];
     let rp_currentIndex = 0;
     let rp_isRecording = false;
     let rp_recognition = null;
@@ -281,6 +474,39 @@
 
     const RP_PARENT_SAVE_TYPE = 'RP_SAVE_SCORE';
     const RP_PARENT_RESULT_TYPE = 'RP_SAVE_RESULT';
+
+    function rp_escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function rp_escapeRegExp(str) {
+      return String(str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function rp_highlightText(text, stressWords) {
+      let html = rp_escapeHtml(text);
+      const words = (stressWords || [])
+        .filter(Boolean)
+        .sort((a, b) => String(b).length - String(a).length);
+
+      words.forEach(function(word) {
+        const escapedWord = rp_escapeHtml(word);
+        const pattern = rp_escapeRegExp(escapedWord);
+        const regex = new RegExp(pattern, 'gi');
+        html = html.replace(regex, '<span class="rp_stress">$&</span>');
+      });
+
+      return html;
+    }
+
+    function rp_getChunk() {
+      return rp_chunks[rp_currentIndex] || { text: '', stress: [] };
+    }
 
     function rp_showWarning(message) {
       const box = document.getElementById('rp_warning_box');
@@ -383,25 +609,93 @@
       }
     }
 
-    function rp_loadChunk() {
-      document.getElementById('rp_current_idx').innerText = rp_currentIndex + 1;
-      document.getElementById('rp_total_idx').innerText = rp_chunks.length;
-      document.getElementById('rp_text_box').innerHTML = rp_chunks[rp_currentIndex].html;
-      document.getElementById('rp_feedback_box').style.display = 'none';
+    function rp_renderParagraphSelector() {
+      const grid = document.getElementById('rp_paragraph_grid');
+      if (!grid) return;
+      grid.innerHTML = '';
 
-      rp_showWarning('');
+      rp_paragraphSets.forEach(function(paragraph, index) {
+        const totalParts = paragraph.chunks.length;
+        const firstText = paragraph.chunks[0]?.text || '';
+        const preview = firstText.length > 140 ? firstText.slice(0, 140) + '...' : firstText;
 
-      const btn = document.getElementById('rp_btn_mic');
-      btn.classList.remove('recording');
-      btn.disabled = false;
-      btn.innerHTML = '🎤 เริ่มอ่าน';
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'rp_paragraph_card';
+        card.onclick = function() { window.rp_selectParagraph(paragraph.id); };
+        card.innerHTML =
+          '<div class="rp_card_title">' + rp_escapeHtml(paragraph.title) + '</div>' +
+          '<div class="rp_card_meta">' + totalParts + ' ช่วงอ่าน • ' + rp_escapeHtml(paragraph.description) + '</div>' +
+          '<div class="rp_card_preview">' + rp_escapeHtml(preview) + '</div>';
+        grid.appendChild(card);
+      });
     }
 
+    function rp_stopAllMedia() {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+      if (rp_recognition && rp_isRecording) {
+        try {
+          rp_recognition.stop();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      rp_isRecording = false;
+    }
+
+    function rp_loadChunk() {
+      const chunk = rp_getChunk();
+      const nextBtn = document.getElementById('rp_next_btn');
+
+      document.getElementById('rp_selected_paragraph_label').innerText = rp_currentParagraph?.title || 'Paragraph';
+      document.getElementById('rp_current_idx').innerText = rp_currentIndex + 1;
+      document.getElementById('rp_total_idx').innerText = rp_chunks.length;
+      document.getElementById('rp_text_box').innerHTML = rp_highlightText(chunk.text, chunk.stress);
+      document.getElementById('rp_feedback_box').style.display = 'none';
+      document.getElementById('rp_transcript_display').style.display = 'none';
+      document.getElementById('rp_transcript_display').innerHTML = '';
+
+      if (nextBtn) {
+        nextBtn.innerHTML = rp_currentIndex < rp_chunks.length - 1 ? 'ข้อถัดไป ➡️' : 'ดูคะแนนสรุป ✅';
+      }
+
+      rp_showWarning('');
+      rp_resetMicButton('🎤 เริ่มอ่าน');
+    }
+
+    window.rp_selectParagraph = function(paragraphId) {
+      const paragraph = rp_paragraphSets.find(item => item.id === paragraphId) || rp_paragraphSets[0];
+      rp_stopAllMedia();
+
+      rp_currentParagraph = paragraph;
+      rp_chunks = paragraph.chunks;
+      rp_currentIndex = 0;
+      rp_scores = [];
+
+      document.getElementById('rp_select_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_main_screen').style.display = 'block';
+      rp_loadChunk();
+    };
+
+    window.rp_goToSelect = function() {
+      rp_stopAllMedia();
+      rp_currentParagraph = null;
+      rp_chunks = [];
+      rp_currentIndex = 0;
+      rp_scores = [];
+      document.getElementById('rp_main_screen').style.display = 'none';
+      document.getElementById('rp_final_screen').style.display = 'none';
+      document.getElementById('rp_select_screen').style.display = 'block';
+      rp_renderParagraphSelector();
+    };
+
     window.rp_playAudio = function() {
+      const chunk = rp_getChunk();
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const textToRead = rp_chunks[rp_currentIndex].text;
-        const utterance = new SpeechSynthesisUtterance(textToRead);
+        const utterance = new SpeechSynthesisUtterance(chunk.text);
         utterance.lang = 'en-US';
         utterance.rate = 0.85;
         window.speechSynthesis.speak(utterance);
@@ -439,6 +733,7 @@
       try {
         rp_showWarning('');
         document.getElementById('rp_feedback_box').style.display = 'none';
+        document.getElementById('rp_transcript_display').style.display = 'none';
 
         rp_recognition.start();
         rp_isRecording = true;
@@ -457,7 +752,8 @@
       return (str || '')
         .toLowerCase()
         .replace(/[’']/g, '')
-        .replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '')
+        .replace(/[-–—]/g, ' ')
+        .replace(/[.,/#!$%^&*;:{}=_`~()?"…]/g, '')
         .replace(/\s+/g, ' ')
         .trim();
     }
@@ -465,7 +761,9 @@
     function rp_evaluatePronunciation(transcript) {
       if (!transcript) return;
 
-      const originalText = rp_cleanString(rp_chunks[rp_currentIndex].text);
+      const chunk = rp_getChunk();
+      const scoreSourceText = chunk.scoreText || chunk.text;
+      const originalText = rp_cleanString(scoreSourceText);
       const spokenText = rp_cleanString(transcript);
 
       const originalWords = originalText.split(' ').filter(Boolean);
@@ -477,13 +775,17 @@
       originalWords.forEach(function(word) {
         if (spokenWords.includes(word)) {
           correctCount++;
-          resultHtml += '<span class="rp_correct_word">' + word + '</span> ';
+          resultHtml += '<span class="rp_correct_word">' + rp_escapeHtml(word) + '</span> ';
         } else {
-          resultHtml += '<span class="rp_wrong_word">' + word + '</span> ';
+          resultHtml += '<span class="rp_wrong_word">' + rp_escapeHtml(word) + '</span> ';
         }
       });
 
-      const percentage = Math.min(100, Math.round((correctCount / originalWords.length) * 100));
+      const percentage = originalWords.length ? Math.min(100, Math.round((correctCount / originalWords.length) * 100)) : 0;
+
+      const transcriptBox = document.getElementById('rp_transcript_display');
+      transcriptBox.style.display = 'block';
+      transcriptBox.innerHTML = rp_escapeHtml(transcript);
 
       document.getElementById('rp_result_display').innerHTML = resultHtml;
       document.getElementById('rp_score_text').innerText = percentage;
@@ -493,16 +795,8 @@
     }
 
     window.rp_nextChunk = function() {
-      window.speechSynthesis.cancel();
-
-      if (rp_recognition && rp_isRecording) {
-        try {
-          rp_recognition.stop();
-        } catch (e) {
-          console.error(e);
-        }
-        rp_resetMicButton();
-      }
+      rp_stopAllMedia();
+      rp_resetMicButton();
 
       if (rp_currentIndex < rp_chunks.length - 1) {
         rp_currentIndex++;
@@ -510,6 +804,7 @@
       } else {
         document.getElementById('rp_main_screen').style.display = 'none';
         document.getElementById('rp_final_screen').style.display = 'block';
+        document.getElementById('rp_final_paragraph_name').innerText = rp_currentParagraph?.title || 'Paragraph';
 
         const validScores = rp_scores.filter(score => typeof score === 'number');
         const total = validScores.reduce((sum, score) => sum + score, 0);
@@ -523,17 +818,13 @@
       }
     };
 
-    window.rp_restart = function() {
-      window.speechSynthesis.cancel();
-
-      if (rp_recognition && rp_isRecording) {
-        try {
-          rp_recognition.stop();
-        } catch (e) {
-          console.error(e);
-        }
+    window.rp_restartSelected = function() {
+      if (!rp_currentParagraph) {
+        window.rp_goToSelect();
+        return;
       }
 
+      rp_stopAllMedia();
       rp_currentIndex = 0;
       rp_scores = [];
       rp_resetMicButton('🎤 เริ่มอ่าน');
@@ -546,27 +837,24 @@
       const avgScore = parseInt(document.getElementById('rp_final_score').innerText, 10) || 0;
       const endBox = document.getElementById('rp_end_msg');
       const btn = document.getElementById('rp_submit_btn');
+      const paragraph = rp_currentParagraph || { title: 'Paragraph', unit: 'Unit 1', activityCode: 'Pronunciation Practice' };
 
       if (btn) {
         btn.innerText = '⏳ กำลังส่งคะแนน...';
         btn.disabled = true;
       }
 
-      /*
-        ทางออก B:
-        ไฟล์นี้ถูกโฮสต์อยู่คนละ origin กับ Google Apps Script
-        จึงใช้ google.script.run โดยตรงไม่ได้
-        ต้องส่งคะแนนกลับไปให้หน้าแม่ของ LMS ด้วย postMessage
-        แล้วให้หน้าแม่เรียก google.script.run.saveScore(...) ต่อ
-      */
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({
           type: RP_PARENT_SAVE_TYPE,
           payload: {
-            activityCode: 'Pronunciation Practice',
-            unit: 'Unit 1',
+            activityCode: paragraph.activityCode || ('Pronunciation Practice - ' + paragraph.title),
+            unit: paragraph.unit || 'Unit 1',
             activityType: 'กิจกรรมย่อย',
-            avgScore: avgScore
+            avgScore: avgScore,
+            paragraphId: paragraph.id,
+            paragraphTitle: paragraph.title,
+            totalParts: rp_chunks.length
           }
         }, '*');
 
@@ -622,7 +910,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      rp_loadChunk();
+      rp_renderParagraphSelector();
 
       if (!window.isSecureContext) {
         rp_showWarning('⚠️ หมายเหตุ: ระบบตรวจเสียงต้องเปิดผ่าน HTTPS เท่านั้น ถ้าเปิดจากไฟล์ในเครื่องหรือ HTTP ไมค์อาจใช้ไม่ได้');
